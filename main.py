@@ -30,8 +30,8 @@ data_cleaned = clean_data(data)
 
 data_balanced = balance_data(data_cleaned)
 
-data_train, data_test, labels_train, labels_test, column_headers = split_data(data_balanced)
+data_scaled = scale_data(data_balanced)
 
-data_train_scaled, column_header_nozerovar = scale_data(data_train, column_headers)
+data_train, data_test, labels_train, labels_test = split_data(data_scaled)
 
-sorted_indices, sorted_scores = univariate_feature_selection(data_train_scaled, labels_train)
+sorted_indices, sorted_scores = univariate_feature_selection(data_train, labels_train)

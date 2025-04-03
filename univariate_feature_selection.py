@@ -1,4 +1,5 @@
-'''x'''
+'''This module contains the function univariate_feature_selection which is used to select
+    the best features using the ANOVA F-test. It also plots the scores of the features.'''
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6,6 +7,8 @@ from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.preprocessing import StandardScaler
 
 def univariate_feature_selection(data_train_scaled, labels_train):
+    '''This function calculates the ANOVA per feature and picks the top k amount of features'''
+
     # Schaal de data
     scaler = StandardScaler()
     x_train_scaled = scaler.fit_transform(data_train_scaled)
@@ -35,10 +38,12 @@ def univariate_feature_selection(data_train_scaled, labels_train):
     # Laat de gesorteerde indices en scores zien
     #print("Geselecteerde feature indices (gesorteerd):", sorted_indices)
     #print("Feature scores (gesorteerd):", sorted_scores)
-    plt.figure
-    plt.xlabel("n feature")
-    plt.ylabel("score")
+    plt.figure()
+    plt.title("Top Feature Scores from ANOVA F-test")
+    plt.xlabel("Feature Rank")
+    plt.ylabel("F-score")
     plt.plot(range(1, 100), sorted_scores[:99])
+    plt.tight_layout()
     plt.show()
 
     return sorted_indices, sorted_scores
