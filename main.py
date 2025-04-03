@@ -34,4 +34,5 @@ data_scaled = scale_data(data_balanced)
 
 data_train, data_test, labels_train, labels_test = split_data(data_scaled)
 
-sorted_indices, sorted_scores = univariate_feature_selection(data_train, labels_train)
+data_train_n_features, sorted_scores = univariate_feature_selection(
+                                                            data_train, labels_train, n_features=30)
