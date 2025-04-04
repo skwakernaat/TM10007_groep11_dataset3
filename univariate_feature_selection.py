@@ -10,8 +10,8 @@ def univariate_feature_selection(data_train_scaled, labels_train):
     scaler = StandardScaler()
     x_train_scaled = scaler.fit_transform(data_train_scaled)
 
-    # Bepaal het aantal features dat je wilt selecteren (bijvoorbeeld 100)
-    k_best = np.shape(data_train_scaled)[1]
+    # Bepaal het aantal features dat je wilt selecteren (bijvoorbeeld 20 features)
+    k_best = min(50, np.shape(data_train_scaled)[1])
 
     # Pas univariate feature selectie toe met de ANOVA F-test
     selector = SelectKBest(score_func=f_classif, k=k_best)
@@ -19,7 +19,7 @@ def univariate_feature_selection(data_train_scaled, labels_train):
 
     # De geselecteerde features (scores en indices)
     selected_indices = selector.get_support(indices=True)
-    selected_scores = selector.scores_
+    selected_scores = selector.scores_[selected_indices]
 
 
     # Koppel de scores aan de indices
@@ -35,10 +35,11 @@ def univariate_feature_selection(data_train_scaled, labels_train):
     # Laat de gesorteerde indices en scores zien
     #print("Geselecteerde feature indices (gesorteerd):", sorted_indices)
     #print("Feature scores (gesorteerd):", sorted_scores)
-    plt.figure
+    plt.figure()
     plt.xlabel("n feature")
     plt.ylabel("score")
-    plt.plot(range(1, 100), sorted_scores[:99])
+    plt.plot(range(1, len(sorted_scores) + 1), sorted_scores, marker='o')
+    plt.grid(True)
     plt.show()
 
-    return sorted_indices, sorted_scores
+    return sorted_indices, sorted_scores, x_train_selected
