@@ -23,6 +23,7 @@ from balance_data import balance_data
 from split_data import split_data
 from scale_data import scale_data
 from univariate_feature_selection import univariate_feature_selection
+from linear_classifiers import linear_classifier
 
 data = load_data()
 
@@ -32,6 +33,13 @@ data_balanced = balance_data(data_cleaned)
 
 data_scaled = scale_data(data_balanced)
 
-data_train, data_test, labels_train, labels_test = split_data(data_scaled)
+data_train, data_test, data_val, labels_train, labels_test, labels_val = split_data(data_scaled)
 
-sorted_indices, sorted_scores = univariate_feature_selection(data_train, labels_train)
+sorted_indices = univariate_feature_selection(data_train, labels_train)
+
+top_indices = sorted_indices[:2] # Select top amount of features features
+data_train = data_train[:, top_indices]
+data_val = data_val[:, top_indices]
+data_test = data_test[:, top_indices]
+
+linear_classifier(data_train, data_val, labels_train, labels_val)

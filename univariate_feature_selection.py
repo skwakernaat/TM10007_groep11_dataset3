@@ -24,7 +24,6 @@ def univariate_feature_selection(data_train_scaled, labels_train):
     selected_indices = selector.get_support(indices=True)
     selected_scores = selector.scores_
 
-
     # Koppel de scores aan de indices
     feature_scores = list(zip(selected_indices, selected_scores))
 
@@ -46,4 +45,4 @@ def univariate_feature_selection(data_train_scaled, labels_train):
     plt.tight_layout()
     plt.show()
 
-    return sorted_indices, sorted_scores
+    return sorted_indices
