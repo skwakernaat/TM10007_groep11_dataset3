@@ -1,3 +1,5 @@
+
+#%%
 import numpy as np
 import seaborn
 import pandas as pd
@@ -6,7 +8,7 @@ import itertools
 import matplotlib.pyplot as plt
 import statistics
 import math
-from worcgist.load_data import load_data
+from load_data import load_data
 from sklearn import model_selection
 from sklearn import model_selection
 from sklearn import metrics
@@ -17,6 +19,11 @@ from sklearn import svm
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler
+from SVM_classiefier import pca_selection
+from SVM_classiefier import svm_classifier
+from SVM_classiefier import svm_poly_kernel
+from rfecv_feature_selection import rfecv_features
+
 
 from clean_data import clean_data
 from balance_data import balance_data
@@ -25,6 +32,7 @@ from scale_data import scale_data
 from univariate_feature_selection import univariate_feature_selection
 from linear_classifiers import linear_classifier
 
+#%%
 data = load_data()
 
 data_cleaned = clean_data(data)
@@ -35,11 +43,32 @@ data_scaled = scale_data(data_balanced)
 
 data_train, data_test, data_val, labels_train, labels_test, labels_val = split_data(data_scaled)
 
-sorted_indices = univariate_feature_selection(data_train, labels_train)
+#%%
+# Feature selection
+data_train_n_features, sorted_scores = univariate_feature_selection(
+                                                            data_train, labels_train, n_features=30)
+rfecv_features(data_train_n_features, labels_train)
 
-top_indices = sorted_indices[:2] # Select top amount of features features
-data_train = data_train[:, top_indices]
-data_val = data_val[:, top_indices]
-data_test = data_test[:, top_indices]
+#%% multiple svm classifiers with different kernels
+svm_classifier(data_train_n_features, labels_train)
 
-linear_classifier(data_train, data_val, labels_train, labels_val)
+svm_poly_kernel(data_train_n_features, labels_train)
+
+#%%
+# Plotting the selected features using matplotlib
+# Create a scatter plot of the first two selected features
+
+# plt.figure(figsize=(8, 6))
+
+# # Scatter plot with the first two selected features (just an example)
+# plt.scatter(data_selected_pca[:, 0], data_selected_pca[:, 1], c=labels_train, cmap=plt.cm.Paired,
+#             edgecolor='k', s=25, cmap=plt.cm.Paired)
+
+# # Add labels
+# plt.xlabel('Feature PCA 1')
+# plt.ylabel('Feature PCA 2')
+# plt.title('Scatter plot of PCA features')
+
+# # Show the plot
+# plt.show()
+
