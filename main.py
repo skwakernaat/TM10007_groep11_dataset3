@@ -43,7 +43,7 @@ data_balanced = balance_data(data_cleaned)
 
 data_scaled = scale_data(data_balanced)
 
-data_train, data_test, data_val, labels_train, labels_test, labels_val = split_data(data_scaled)
+data_train, data_test, labels_train, labels_test = split_data(data_scaled)
 
 #%%
 # Feature selection

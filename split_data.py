@@ -16,9 +16,6 @@ def split_data(data):
     labels_array = labels_array.astype(int)
 
     # Splitting data into train and test data sets. 80% is used for training set. Ratio of GIST and non-GIST is kept the same (50/50)
-    data_train_val, data_test, labels_train_val, labels_test = model_selection.train_test_split(data_array, labels_array, test_size=0.20, stratify=labels_array)
+    data_train, data_test, labels_train, labels_test = model_selection.train_test_split(data_array, labels_array, test_size=0.20, stratify=labels_array)
 
-    # Splitting train data into train and validation data sets. 75% is used for training set. Ratio of GIST and non-GIST is kept the same (50/50)
-    data_train, data_val, labels_train, labels_val = model_selection.train_test_split(data_train_val, labels_train_val, test_size=0.25, stratify=labels_train_val)
-
-    return data_train, data_test, data_val, labels_train, labels_test, labels_val
+    return data_train, data_test, labels_train, labels_test
