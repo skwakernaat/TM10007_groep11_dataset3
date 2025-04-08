@@ -1,7 +1,6 @@
 '''This module contains the function linear_classifier which is used to train a linear classifier
     on the data and evaluate its performance.'''
 
-from sklearn.metrics import accuracy_score, classification_report
 from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.svm import SVC
@@ -20,7 +19,7 @@ def linear_classifier(data_train, labels_train, n_folds=5):
     results_list = []
 
     # Train and evaluate each classifier
-    for name, clf in classifiers.items():
+    for clf in classifiers.values():
         result = evaluate_model_with_kfold(data_train, labels_train, clf, n_folds)
         results_list.append(result)
 

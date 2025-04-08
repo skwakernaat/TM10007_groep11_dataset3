@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.preprocessing import StandardScaler
 
-def univariate_feature_selection(data_train, labels_train, n_features=30):
+def univariate_feature_selection(data_train, labels_train, data_test, n_features=30):
     '''This function calculates the ANOVA per feature and returns the top n features and their scores.'''
 
     # Scale the data
@@ -38,6 +38,7 @@ def univariate_feature_selection(data_train, labels_train, n_features=30):
 
     # Get top features from original DataFrame
     data_train_n_features = data_train[:, top_indices]
+    data_test_n_features = data_test[:, top_indices]
 
     # Plot: x = feature rank (1 = best), y = F-score
     plt.figure(figsize=(12, 4))
@@ -50,4 +51,4 @@ def univariate_feature_selection(data_train, labels_train, n_features=30):
     plt.tight_layout()
     plt.show()
 
-    return data_train_n_features, sorted_all_scores
+    return data_train_n_features, data_test_n_features
