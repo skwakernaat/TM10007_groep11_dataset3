@@ -25,7 +25,7 @@ def pca_selection(data_selected_uni, n_features=2):
     return x_pca
 
 def svm_classifier(data_selected_uni, labels_train):
-
+    results = []
     # Construct classifiers
     svmlin = SVC(kernel='linear', gamma='scale')
     svmrbf = SVC(kernel='rbf', gamma='scale')
@@ -35,18 +35,13 @@ def svm_classifier(data_selected_uni, labels_train):
     clsfnames = ['KNN', 'Random Forest', 'SVM Linear', 'SVM Poly', 'SVM RBF']
 
     for clsf, clsfn in zip(clsfs, clsfnames):
-        results = []
-        results = []
-
-
-
         # Fit the classifier to the training data
         # Note: Ensure that data_selected_uni and labels_train are numpy arrays or similar structures
         clsf.fit(data_selected_uni, labels_train)
 
         result = evaluate_model_with_kfold(data_selected_uni, labels_train, model=clsf, n_splits=5)
         results.append(result)
-    return result
+    return results
 
 
 
@@ -55,7 +50,7 @@ def svm_poly_kernel(data_selected_uni, labels_train):
     '''
     SVM with polynomial kernel
     '''
-
+    results = []
     degrees = [1, 3, 5]
     coef0s = [0.01, 0.5, 1]
     slacks = [0.01, 0.5, 1]
@@ -67,12 +62,9 @@ def svm_poly_kernel(data_selected_uni, labels_train):
                 clsfs.append(SVC(kernel='poly', degree=degree, coef0=coef0, C=slack, gamma='scale'))
 
     for clsf in clsfs:
-        result = []
-        results = []
-
         # Fit the classifier to the training data
         clsf.fit(data_selected_uni, labels_train)
 
         result = evaluate_model_with_kfold(data_selected_uni, labels_train, model=clsf, n_splits=5)
         results.append(result)
-    return result
+    return results
