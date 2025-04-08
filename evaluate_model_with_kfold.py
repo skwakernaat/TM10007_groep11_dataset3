@@ -9,10 +9,8 @@ def evaluate_model_with_kfold(X, y, model=None, n_splits=5):
 
     skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=42)
 
-    accuracies = []
-    sensitivities = []
-    specificities = []
-    all_conf_matrices = []
+    acc_list, sens_list, spec_list = [], [], []
+    cm_total = np.zeros((2, 2), dtype=float)
 
     for train_index, test_index in skf.split(X, y):
         X_train, X_test = X[train_index], X[test_index]
@@ -23,29 +21,23 @@ def evaluate_model_with_kfold(X, y, model=None, n_splits=5):
 
         acc = accuracy_score(y_test, y_pred)
         cm = confusion_matrix(y_test, y_pred)
-
-        # Confusion matrix structure: [[TN, FP], [FN, TP]]
         tn, fp, fn, tp = cm.ravel()
 
-        sens = tp / (tp + fn) if (tp + fn) > 0 else 0  # Sensitivity (Recall)
-        spec = tn / (tn + fp) if (tn + fp) > 0 else 0  # Specificity
+        sens = tp / (tp + fn) if (tp + fn) > 0 else 0
+        spec = tn / (tn + fp) if (tn + fp) > 0 else 0
 
-        accuracies.append(acc)
-        sensitivities.append(sens)
-        specificities.append(spec)
-        all_conf_matrices.append(cm)
+        acc_list.append(acc)
+        sens_list.append(sens)
+        spec_list.append(spec)
+        cm_total += cm
 
-    # Aggregate results
-    print(f"Model:    {model}")
-    print(f"\nStratified {n_splits}-Fold Cross-Validation Results:")
-    print(f"Mean Accuracy:    {np.mean(accuracies):.3f}")
-    print(f"Mean Sensitivity: {np.mean(sensitivities):.3f}")
-    print(f"Mean Specificity: {np.mean(specificities):.3f}")
+    # Average confusion matrix
+    mean_cm = cm_total / n_splits
 
     return {
         'model': model,
-        'accuracies': accuracies,
-        'sensitivities': sensitivities,
-        'specificities': specificities,
-        'confusion_matrices': all_conf_matrices
+        'mean_accuracy': np.mean(acc_list),
+        'mean_sensitivity': np.mean(sens_list),
+        'mean_specificity': np.mean(spec_list),
+        'mean_confusion_matrix': mean_cm
     }
