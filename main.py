@@ -31,6 +31,7 @@ from split_data import split_data
 from scale_data import scale_data
 from univariate_feature_selection import univariate_feature_selection
 from linear_classifiers import linear_classifier
+from qda_classifier import qda_func
 
 #%%
 data = load_data()
@@ -54,21 +55,6 @@ svm_classifier(data_train_n_features, labels_train)
 
 svm_poly_kernel(data_train_n_features, labels_train)
 
-#%%
-# Plotting the selected features using matplotlib
-# Create a scatter plot of the first two selected features
+linear_classifier(data_train_n_features, data_train_n_features, labels_train, labels_train)
 
-# plt.figure(figsize=(8, 6))
-
-# # Scatter plot with the first two selected features (just an example)
-# plt.scatter(data_selected_pca[:, 0], data_selected_pca[:, 1], c=labels_train, cmap=plt.cm.Paired,
-#             edgecolor='k', s=25, cmap=plt.cm.Paired)
-
-# # Add labels
-# plt.xlabel('Feature PCA 1')
-# plt.ylabel('Feature PCA 2')
-# plt.title('Scatter plot of PCA features')
-
-# # Show the plot
-# plt.show()
-
+qda_predictions = qda_func(data_train_n_features, labels_train, data_train_n_features, labels_train)
