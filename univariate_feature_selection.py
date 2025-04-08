@@ -22,12 +22,16 @@ def univariate_feature_selection(data_train, labels_train, n_features=30):
     all_indices = np.arange(len(all_scores))
     feature_scores = list(zip(all_indices, all_scores))
 
-    # Sort scores descending
+    # Koppel de scores aan de indices
+    feature_scores = list(zip(all_indices, all_scores))
+
+    # Sorteer op basis van de scores (aflopend)
     sorted_feature_scores = sorted(feature_scores, key=lambda x: x[1], reverse=True)
 
     # Pick top n_features
     top_indices = [x[0] for x in sorted_feature_scores[:n_features]]
     #top_scores = [x[1] for x in sorted_feature_scores[:n_features]]
+
 
     # Sort all scores descending
     sorted_all_scores = sorted(all_scores, reverse=True)
