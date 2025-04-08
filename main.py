@@ -63,5 +63,6 @@ results_qda = qda_func(data_train_n_features, labels_train)
 
 results_rf = random_forest_classifier(data_train, labels_train, data_test, labels_test, n_estimators=100, random_state=42, max_features_to_test=50, plot=True)
 
-df_results = display_results(results_svm, results_svm_polykernel, results_linear, results_qda)
+df_results = display_results(results_svm, results_svm_polykernel, results_linear, results_qda, results_rf)
+
 print(df_results)
