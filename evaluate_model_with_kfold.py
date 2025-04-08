@@ -36,12 +36,14 @@ def evaluate_model_with_kfold(X, y, model=None, n_splits=5):
         all_conf_matrices.append(cm)
 
     # Aggregate results
+    print(f"Model:    {model}")
     print(f"\nStratified {n_splits}-Fold Cross-Validation Results:")
     print(f"Mean Accuracy:    {np.mean(accuracies):.3f}")
     print(f"Mean Sensitivity: {np.mean(sensitivities):.3f}")
     print(f"Mean Specificity: {np.mean(specificities):.3f}")
 
     return {
+        'model': model,
         'accuracies': accuracies,
         'sensitivities': sensitivities,
         'specificities': specificities,
