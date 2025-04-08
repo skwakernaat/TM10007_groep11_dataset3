@@ -1,8 +1,9 @@
 """In this module the QDA classifier is trained and tested"""
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 
-def qda_func(data_train_n_features, labels_train, data_test_n_features, labels_test):
+from evaluate_model_with_kfold import evaluate_model_with_kfold
+
+def qda_func(X, y, n_splits=5):
     """Train and test QDA classifier
 
     Args:
@@ -14,16 +15,14 @@ def qda_func(data_train_n_features, labels_train, data_test_n_features, labels_t
     Returns:
 
     """
-    # initialize and train model
+    # # initialize and train model
+    # qda = QuadraticDiscriminantAnalysis(reg_param=0.1)
+    # qda.fit(data_train_n_features, labels_train)
+
+    # # predict on the test set
+    # predictions = qda.predict(data_test_n_features)
+
     qda = QuadraticDiscriminantAnalysis(reg_param=0.1)
-    qda.fit(data_train_n_features, labels_train)
+    results = evaluate_model_with_kfold(X, y, qda, n_splits)
 
-    # predict on the test set
-    predictions = qda.predict(data_test_n_features)
-
-    # evalutate performance
-    print("Accuracy:", accuracy_score(labels_test, predictions))
-    print("Confusion Matrix:\n", confusion_matrix(labels_test, predictions))
-    print("Classification Report:\n", classification_report(labels_test, predictions))
-
-    return predictions
+    return results
