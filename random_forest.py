@@ -1,13 +1,13 @@
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+from sklearn.model_selection import cross_val_score, KFold
+from tqdm import tqdm
+
 def random_forest_classifier(data_train, labels_train, data_test, labels_test, n_estimators=100, random_state=42, max_features_to_test=50, plot=True):
     '''This function trains a Random Forest classifier and evaluates its performance.'''
-
-    from sklearn.ensemble import RandomForestClassifier
-    from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
-    import matplotlib.pyplot as plt
-    import seaborn as sns
-    import numpy as np
-    from sklearn.model_selection import cross_val_score, KFold
-    from tqdm import tqdm
 
     # Train a model with all features to get feature importances
     feature_importances_all_runs = np.zeros(data_train.shape[1])

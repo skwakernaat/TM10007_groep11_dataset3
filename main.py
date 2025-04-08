@@ -32,6 +32,7 @@ from scale_data import scale_data
 from univariate_feature_selection import univariate_feature_selection
 from linear_classifiers import linear_classifier
 from qda_classifier import qda_func
+from random_forest import random_forest_classifier
 
 #%%
 data = load_data()
@@ -58,3 +59,5 @@ svm_poly_kernel(data_train_n_features, labels_train)
 linear_classifier(data_train_n_features, data_train_n_features, labels_train, labels_train)
 
 qda_predictions = qda_func(data_train_n_features, labels_train, data_train_n_features, labels_train)
+
+a, b = random_forest_classifier(data_train, labels_train, data_test, labels_test, n_estimators=100, random_state=42, max_features_to_test=50, plot=True)
