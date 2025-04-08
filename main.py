@@ -47,17 +47,17 @@ data_train, data_test, labels_train, labels_test = split_data(data_scaled)
 
 #%%
 # Feature selection
-data_train_n_features, sorted_scores = univariate_feature_selection(
-                                                            data_train, labels_train, n_features=30)
+data_train_n_features, data_test_n_features = univariate_feature_selection(
+                                                            data_train, labels_train, data_test, n_features=30)
 rfecv_features(data_train_n_features, labels_train)
 
-#%% multiple svm classifiers with different kernels
-svm_classifier(data_train_n_features, labels_train)
+# functions for different classifiers
+results_svm = svm_classifier(data_train_n_features, labels_train)
 
-svm_poly_kernel(data_train_n_features, labels_train)
+results_svm_polykernel = svm_poly_kernel(data_train_n_features, labels_train)
 
-linear_classifier(data_train_n_features, data_train_n_features, labels_train, labels_train)
+results_linear = linear_classifier(data_train_n_features, labels_train)
 
-qda_predictions = qda_func(data_train_n_features, labels_train, data_train_n_features, labels_train)
+results_qda = qda_func(data_train_n_features, labels_train)
 
-a, b = random_forest_classifier(data_train, labels_train, data_test, labels_test, n_estimators=100, random_state=42, max_features_to_test=50, plot=True)
+#results_rf = random_forest_classifier(data_train, labels_train, data_test, labels_test, n_estimators=100, random_state=42, max_features_to_test=50, plot=True)
