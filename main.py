@@ -33,6 +33,7 @@ from univariate_feature_selection import univariate_feature_selection
 from linear_classifiers import linear_classifier
 from qda_classifier import qda_func
 from random_forest import random_forest_classifier
+from display_results import display_results
 
 #%%
 data = load_data()
@@ -60,4 +61,7 @@ results_linear = linear_classifier(data_train_n_features, labels_train)
 
 results_qda = qda_func(data_train_n_features, labels_train)
 
-#results_rf = random_forest_classifier(data_train, labels_train, data_test, labels_test, n_estimators=100, random_state=42, max_features_to_test=50, plot=True)
+results_rf = random_forest_classifier(data_train, labels_train, data_test, labels_test, n_estimators=100, random_state=42, max_features_to_test=50, plot=True)
+
+df_results = display_results(results_svm, results_svm_polykernel, results_linear, results_qda)
+print(df_results)

@@ -12,7 +12,6 @@ def linear_classifier(data_train, labels_train, n_folds=5):
     classifiers = {
         "Logistic Regression": LogisticRegression(max_iter=1000),
         "LDA": LinearDiscriminantAnalysis(),
-        "Linear SVM": SVC(kernel='linear'),
         "SGD Classifier": SGDClassifier(loss='log_loss', max_iter=1000)
     }
 
