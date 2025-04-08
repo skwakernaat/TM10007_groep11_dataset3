@@ -3,7 +3,7 @@ from sklearn.metrics import classification_report, accuracy_score, confusion_mat
 import numpy as np
 from evaluate_model_with_kfold import evaluate_model_with_kfold  # Importeer de functie
 
-def random_forest_classifier(data_train, labels_train, data_test, labels_test, n_estimators=100, random_state=42, plot=True):
+def random_forest_classifier(data_train, labels_train, n_estimators=100, random_state=42,):
     '''Deze functie traint een Random Forest model en evalueert de prestaties met k-fold cross-validation via evaluate_model_with_kfold.'''
 
     # Definieer het Random Forest model
