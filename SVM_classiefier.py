@@ -10,6 +10,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.metrics.pairwise import rbf_kernel, sigmoid_kernel
 from sklearn.model_selection import cross_val_score
+from evaluate_model_with_kfold import evaluate_model_with_kfold
 
 
 
@@ -34,21 +35,20 @@ def svm_classifier(data_selected_uni, labels_train):
     clsfnames = ['KNN', 'Random Forest', 'SVM Linear', 'SVM Poly', 'SVM RBF']
 
     for clsf, clsfn in zip(clsfs, clsfnames):
+        results = []
+        results = []
+
         print(f"Training {clsfn}...")
 
         # Fit the classifier to the training data
         # Note: Ensure that data_selected_uni and labels_train are numpy arrays or similar structures
         clsf.fit(data_selected_uni, labels_train)
 
-        #predict and calculate accuracy
-        predictions = clsf.predict(data_selected_uni)
-        accuracy = accuracy_score(labels_train, predictions)
-        t = ("Misclassified: %d / %d" % ((labels_train != predictions).sum(), data_selected_uni.shape[0]))
-        #cross_val = cross_val_score(clsf, data_selected_uni, labels_train, cv=5)
-        #print(f"Cross-validation scores: {cross_val}")
+        result = evaluate_model_with_kfold(data_selected_uni, labels_train, model=clsf, n_splits=5)
+        results.append(result)
+    return result
 
-        print(t)
-        print(f"Accuracy: {accuracy:.2f}")
+
 
 
 def svm_poly_kernel(data_selected_uni, labels_train):
@@ -67,19 +67,13 @@ def svm_poly_kernel(data_selected_uni, labels_train):
                 clsfs.append(SVC(kernel='poly', degree=degree, coef0=coef0, C=slack, gamma='scale'))
 
     for clsf in clsfs:
-        print(f"Training SVM with polynomial kernel...")
+        print(f"Training {clsf}...")
+        result = []
+        results = []
 
         # Fit the classifier to the training data
         clsf.fit(data_selected_uni, labels_train)
 
-        # Predict on the training data
-        predictions = clsf.predict(data_selected_uni)
-
-        # Print misclassification information
-        t = f"degree: {clsf.degree}, coef0: {clsf.coef0}, C: {clsf.C}. "
-        t = ("Misclassified: %d / %d" % ((labels_train != predictions).sum(), data_selected_uni.shape[0]))
-        print(t)
-        accuracy = accuracy_score(labels_train, predictions)
-        print(f"Accuracy: {accuracy:.2f}")
-        #cross_val = cross_val_score(clsf, data_selected_uni, labels_train, cv=5)
-        #print(f"Cross-validation scores: {cross_val}")
+        result = evaluate_model_with_kfold(data_selected_uni, labels_train, model=clsf, n_splits=5)
+        results.append(result)
+    return result
