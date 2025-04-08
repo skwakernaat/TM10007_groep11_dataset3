@@ -38,7 +38,7 @@ def svm_classifier(data_selected_uni, labels_train):
         results = []
         results = []
 
-        print(f"Training {clsfn}...")
+
 
         # Fit the classifier to the training data
         # Note: Ensure that data_selected_uni and labels_train are numpy arrays or similar structures
@@ -67,7 +67,6 @@ def svm_poly_kernel(data_selected_uni, labels_train):
                 clsfs.append(SVC(kernel='poly', degree=degree, coef0=coef0, C=slack, gamma='scale'))
 
     for clsf in clsfs:
-        print(f"Training {clsf}...")
         result = []
         results = []
 
