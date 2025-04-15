@@ -3,7 +3,6 @@
 
 from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-from sklearn.svm import SVC
 from evaluate_model_with_kfold import evaluate_model_with_kfold
 
 def linear_classifier(data_train, labels_train, n_folds=5):

@@ -1,18 +1,8 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.datasets import make_classification
-from sklearn import svm
-from sklearn.model_selection import train_test_split
-from sklearn.decomposition import PCA, KernelPCA
-from sklearn.metrics import accuracy_score
+from sklearn.decomposition import PCA
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
-from sklearn.metrics.pairwise import rbf_kernel, sigmoid_kernel
-from sklearn.model_selection import cross_val_score
 from evaluate_model_with_kfold import evaluate_model_with_kfold
-
-
 
 def pca_selection(data_selected_uni, n_features=2):
     '''

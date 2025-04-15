@@ -1,30 +1,12 @@
+'''This module contains the main function which is used to run the entire pipeline of the project.
+    It loads the data, cleans it, splits it into training and test sets, balances the data, scales it,
+    performs feature selection, and trains different classifiers.'''
 
 #%%
-import numpy as np
-import seaborn
-import pandas as pd
-import torch
-import itertools
-import matplotlib.pyplot as plt
-import statistics
-import math
-from load_data import load_data
-from sklearn import model_selection
-from sklearn import model_selection
-from sklearn import metrics
-from sklearn import feature_selection
-from sklearn import preprocessing
-from sklearn import neighbors
-from sklearn import svm
-from sklearn.feature_selection import SelectKBest, f_classif
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler
-from SVM_classiefier import pca_selection
-from SVM_classiefier import svm_classifier
-from SVM_classiefier import svm_poly_kernel
+from SVM_classifier import svm_classifier
+from SVM_classifier import svm_poly_kernel
 from rfecv_feature_selection import rfecv_features
-
-
+from load_data import load_data
 from clean_data import clean_data
 from balance_data import balance_data
 from split_data import split_data
@@ -34,35 +16,48 @@ from linear_classifiers import linear_classifier
 from qda_classifier import qda_func
 from random_forest import random_forest_classifier
 from display_results import display_results
+from plot_learning_curve import plot_learning_curve
 
 #%%
 data = load_data()
 
+# Checks for NaN and Null values, and replaces GIST and non-GIST with 1 and 0 respectively
 data_cleaned = clean_data(data)
 
-data_balanced = balance_data(data_cleaned)
-
-data_scaled = scale_data(data_balanced)
-
-data_train, data_test, labels_train, labels_test = split_data(data_scaled)
+# Splits the data into training (80%) and test (20%) sets
+X_train_unprocessed, X_test_unprocessed, y_train, y_test = split_data(data_cleaned)
 
 #%%
-# Feature selection
-data_train_n_features, data_test_n_features = univariate_feature_selection(
-                                                            data_train, labels_train, data_test, n_features=30)
-rfecv_features(data_train_n_features, labels_train)
+# Checks for the balance between GIST and non-GIST in the training set
+X_train_balanced, X_test_balanced = balance_data(X_train_unprocessed, y_train, X_test_unprocessed)
 
+# Univariate feature selection on the train and test data based on the training data
+X_train_features, X_test_features = univariate_feature_selection(X_train_balanced, y_train,
+                                                                 X_test_balanced, n_features=30)
+
+rfecv_features(X_train_features, y_train)
+
+# Scales the training and test data based on the training data
+X_train_scaled, X_test_scaled = scale_data(X_train_features, X_test_features)
+
+X_train = X_train_scaled
+X_test = X_test_scaled
+
+##%
 # functions for different classifiers
-results_svm = svm_classifier(data_train_n_features, labels_train)
+results_svm = svm_classifier(X_train, y_train)
 
-results_svm_polykernel = svm_poly_kernel(data_train_n_features, labels_train)
+results_svm_polykernel = svm_poly_kernel(X_train, y_train)
 
-results_linear = linear_classifier(data_train_n_features, labels_train)
+results_linear = linear_classifier(X_train, y_train)
 
-results_qda = qda_func(data_train_n_features, labels_train)
+results_qda = qda_func(X_train, y_train)
 
-results_rf = random_forest_classifier(data_train_n_features, labels_train, n_estimators=100, random_state=42)
+results_rf = random_forest_classifier(X_train, y_train, n_estimators=100, random_state=42)
 
-df_results = display_results(results_svm, results_svm_polykernel, results_linear, results_qda, results_rf)
+df_results = display_results(results_svm, results_svm_polykernel,
+                             results_linear, results_qda, results_rf)
 
 print(df_results)
+
+plot_learning_curve(results_svm[-1]['model'], X_train, y_train)
