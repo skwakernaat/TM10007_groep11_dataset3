@@ -1,15 +1,16 @@
+'''This module contains the function plot_learning_curve which is used to plot the learning curve
+    of a given classifier.'''
+
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.ensemble import RandomForestClassifier
-from sklearn import datasets
 from sklearn.model_selection import learning_curve
 from sklearn.model_selection import StratifiedKFold
 
 
-def plot_learning_curve(clf, X, y, cv=5, scoring='accuracy', train_sizes=np.linspace(0.1, 1.0, 10), random_state=42):
-    """
-    Plot a learning curve of a given classifier.
-    """
+def plot_learning_curve(clf, X, y, cv=5, scoring='accuracy', train_sizes=np.linspace(0.1, 1.0, 10),
+                        random_state=42):
+    """Plot a learning curve of a given classifier."""
+
     # Create a StratifiedKFold object for cross-validation
     cv = StratifiedKFold(n_splits=cv, shuffle=True, random_state=random_state)
 

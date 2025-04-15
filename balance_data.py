@@ -21,7 +21,7 @@ def balance_data(X_train, y_train, X_test,):
 
     print(f'\nThere are {count_gist} occurences of GIST in the training dataset.')
     print(f'There are {count_non_gist} occurences of non-GIST in the training dataset.')
-    print(f'The classes GIST and non-GIST are respectively {percentage_gist:.3f}% and'
+    print(f'The classes GIST and non-GIST are respectively {percentage_gist:.3f}% and '
           f'{percentage_non_gist:.3f}% of the training dataset.\n')
 
     return X_train_balanced, X_test_balanced
