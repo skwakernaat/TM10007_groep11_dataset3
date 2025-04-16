@@ -18,21 +18,21 @@ def linear_classifier_with_grid_search(X, y, n_folds=5):
         "Logistic Regression": (LogisticRegression(max_iter=1000),
             {
                 "C": np.logspace(-3, 3, 5),
-                "penalty": ['l2', 'l1'],
+                "penalty": ['l2'],
                 "solver": ['lbfgs', 'liblinear'],
             }
         ),
         "LDA": (LinearDiscriminantAnalysis(),
             {
                 "solver": ['svd', 'lsqr'],
-                "shrinkage": [None, 'auto']  # shrinkage only used with 'lsqr'
+                "shrinkage": [None]
             }
         ),
         "SGD Classifier": (SGDClassifier(loss='log_loss', max_iter=1000),
             {
                 "alpha": np.logspace(-4, -1, 4),
                 "penalty": ['l2', 'l1'],
-                "learning_rate": ['optimal', 'invscaling', 'adaptive']
+                "learning_rate": ['constant', 'optimal', 'invscaling'],
                 "eta0": [0.001, 0.01, 0.1]
             }
         )

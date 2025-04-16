@@ -26,8 +26,7 @@ def qda_with_grid_search(X, y, n_splits=5):
     # predictions = qda.predict(data_test_n_features)
 
     # reg_param is to handle situation where the covariance matrix is singular
-    param_grid = {"reg_param": [np.linspace(0.01, 1.0, 5)],
-                  "solver": ['svd', 'lsqr']
+    param_grid = {"reg_param": [0.01, 0.2575, 0.505, 0.7525, 1.0],
                   }
     qda = QuadraticDiscriminantAnalysis()
 

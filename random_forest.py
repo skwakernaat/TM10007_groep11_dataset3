@@ -12,7 +12,7 @@ def random_forest_classifier_grid_search(X, y):
     #define hyperparameters for grid search
     param_grid = {
         'n_estimators': [10, 50, 100, 200],
-        'max_depth': [None + list(range(1, 30, 5))],
+        'max_depth': [None] + list(range(1, 30, 5)),
         'min_samples_split': list(range(2, 11, 1))
     }
 
