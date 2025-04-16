@@ -1,16 +1,11 @@
 '''This module contains the function linear_classifier which is used to train a linear classifier
     on the data and evaluate its performance.'''
 
-from sklearn.linear_model import LogisticRegression, SGDClassifier
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-from evaluate_model_with_kfold import evaluate_model_with_kfold
-
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import GridSearchCV, StratifiedKFold
 
 def linear_classifier_with_grid_search(X, y, n_folds=5):
     '''This function performs a grid search for linear classifiers. It takes the training data
