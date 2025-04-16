@@ -2,12 +2,14 @@
     perform a grid search for the Random Forest classifier.'''
 
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import GridSearchCV, StratifiedKFold
-import pandas as pd
+
+from grid_search import grid_search
 
 def random_forest_classifier_grid_search(X, y):
     '''This function performs a grid search for the Random Forest classifier. It takes the training
         data and labels as input and returns the top 3 models based on accuracy.'''
+    # Make random forest model
+    clf = RandomForestClassifier(random_state=42)
 
     # Define hyperparameters for grid search
     param_grid = {
@@ -16,14 +18,7 @@ def random_forest_classifier_grid_search(X, y):
         'min_samples_split': list(range(2, 11, 2))
     }
 
-    # Make random forest model
-    clf = RandomForestClassifier(random_state=42)
-    cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+    # Perform grid search with cross-validation and get the top 3 models
+    top_3_df, top_3_models = grid_search(X, y, clf, param_grid)
 
-    grid_search = GridSearchCV(clf, param_grid, cv=cv, scoring='accuracy')
-    grid_search.fit(X, y)
-
-    results_df = pd.DataFrame(grid_search.cv_results_)
-    top_models = results_df.sort_values(by='mean_test_score', ascending=False).head(3)
-
-    return top_models
+    return top_3_models

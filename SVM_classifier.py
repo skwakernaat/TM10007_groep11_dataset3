@@ -6,9 +6,14 @@ import pandas as pd
 from sklearn.svm import SVC
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
 
+from grid_search import grid_search
+
 def svm_classifier_with_grid_search(X, y):
     '''This function performs a grid search for the SVM classifier. It takes the training data
         and labels as input and returns the top 3 models based on accuracy.'''
+
+    # Create SVM model
+    clf = SVC(random_state=42)
     # Define parameter grid with different kernels and their respective parameters
     param_grid = [
     {
@@ -28,14 +33,7 @@ def svm_classifier_with_grid_search(X, y):
         'coef0': list(np.linspace(0.01, 1, 5))
     }
 ]
+    # Perform grid search with cross-validation and get the top 3 models
+    top_3_df, top_3_models = grid_search(X, y, clf, param_grid)
 
-    svm = SVC(random_state=42)
-    cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-
-    grid_search = GridSearchCV(svm, param_grid, cv=cv, scoring='accuracy')
-    grid_search.fit(X, y)
-
-    results_df = pd.DataFrame(grid_search.cv_results_)
-    top_models = results_df.sort_values(by='mean_test_score', ascending=False).head(3)
-
-    return top_models
+    return top_3_models

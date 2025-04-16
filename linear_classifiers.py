@@ -7,6 +7,8 @@ from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
 
+from grid_search import grid_search
+
 def linear_classifier_with_grid_search(X, y, n_folds=5):
     '''This function performs a grid search for linear classifiers. It takes the training data
         and labels as input and returns the top 3 models based on accuracy.'''
@@ -34,23 +36,13 @@ def linear_classifier_with_grid_search(X, y, n_folds=5):
         )
     }
 
-    cv = StratifiedKFold(n_splits=n_folds, shuffle=True, random_state=42)
-
+    # Perform grid search for each classifiers
     best_results = {}
-
-    # Perform grid search for each classifier
     for name, (clf, param_grid) in classifiers_and_grids.items():
-        grid_search = GridSearchCV(clf, param_grid, cv=cv, scoring='accuracy')
-        grid_search.fit(X, y)
+        top_3_df, top_3_models = grid_search(X, y, clf, param_grid)
 
-        # Get grid results in df
-        results_df = pd.DataFrame(grid_search.cv_results_)
-        # Sort by mean test score and take top 3 models
-        top_models = results_df.sort_values(by='mean_test_score', ascending=False).head(3)
-
-        # Store the best results for each classifier
-        best_results[name] = top_models
-
+        best_results[name] = top_3_models
     return best_results
+
 
 
