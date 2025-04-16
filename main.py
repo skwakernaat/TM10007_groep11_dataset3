@@ -3,19 +3,19 @@
     performs feature selection, and trains different classifiers.'''
 
 #%%
-from load_data import load_data
-from clean_data import clean_data
-from balance_data import balance_data
-from split_data import split_data
-from scale_data import scale_data
-from univariate_feature_selection import univariate_feature_selection
-from qda_classifier import qda_with_grid_search
-from random_forest import random_forest_classifier_grid_search
-from display_results import display_results
-from plot_learning_curve import plot_learning_curve
-from remove_zero_var import remove_zero_var
-from SVM_classifier import svm_classifier_with_grid_search
-from linear_classifiers import linear_classifier_with_grid_search
+from preprocessing.load_data import load_data
+from preprocessing.clean_data import clean_data
+from preprocessing.split_data import split_data
+from preprocessing.balance_data import balance_data
+from preprocessing.remove_zero_var import remove_zero_var
+from preprocessing.univariate_feature_selection import univariate_feature_selection
+from preprocessing.scale_data import scale_data
+from classifiers.qda_classifier import qda_with_grid_search
+from classifiers.random_forest import random_forest_classifier_grid_search
+from classifiers.SVM_classifier import svm_classifier_with_grid_search
+from classifiers.linear_classifiers import linear_classifier_with_grid_search
+from results.display_results import display_results
+from results.plot_learning_curve import plot_learning_curve
 
 #%%
 data = load_data()
