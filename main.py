@@ -62,6 +62,4 @@ grid_rf = random_forest_classifier_grid_search(data_train_n_features, labels_tra
 #print(df_results)
 # %%
 
-print(df_results)
-
 plot_learning_curve(results_svm[-1]['model'], X_train, y_train)
