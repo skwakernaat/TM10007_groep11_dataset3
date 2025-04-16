@@ -19,10 +19,7 @@ from sklearn import svm
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler
-from SVM_classiefier import pca_selection
-from SVM_classiefier import svm_classifier
-from SVM_classiefier import svm_poly_kernel
-from rfecv_feature_selection import rfecv_features
+
 
 
 from clean_data import clean_data
@@ -30,10 +27,11 @@ from balance_data import balance_data
 from split_data import split_data
 from scale_data import scale_data
 from univariate_feature_selection import univariate_feature_selection
-from linear_classifiers import linear_classifier
-from qda_classifier import qda_func
-from random_forest import random_forest_classifier
+from qda_classifier import qda_with_grid_search
+from random_forest import random_forest_classifier_grid_search
 from display_results import display_results
+from SVM_classiefier import svm_classifier_with_grid_search
+from linear_classifiers import linear_classifier_with_grid_search
 
 #%%
 data = load_data()
@@ -50,19 +48,17 @@ data_train, data_test, labels_train, labels_test = split_data(data_scaled)
 # Feature selection
 data_train_n_features, data_test_n_features = univariate_feature_selection(
                                                             data_train, labels_train, data_test, n_features=30)
-rfecv_features(data_train_n_features, labels_train)
+# Train and evaluate classifiers
+grid_svm = svm_classifier_with_grid_search(data_train_n_features, labels_train)
 
-# functions for different classifiers
-results_svm = svm_classifier(data_train_n_features, labels_train)
+grid_linear = linear_classifier_with_grid_search(data_train_n_features, labels_train)
 
-results_svm_polykernel = svm_poly_kernel(data_train_n_features, labels_train)
+grid_qda = qda_with_grid_search(data_train_n_features, labels_train)
+print(grid_qda)
 
-results_linear = linear_classifier(data_train_n_features, labels_train)
+grid_rf = random_forest_classifier_grid_search(data_train_n_features, labels_train)
 
-results_qda = qda_func(data_train_n_features, labels_train)
+#df_results = display_results(results_svm, results_svm_polykernel, results_linear, results_qda, results_rf)
 
-results_rf = random_forest_classifier(data_train_n_features, labels_train, n_estimators=100, random_state=42)
-
-df_results = display_results(results_svm, results_svm_polykernel, results_linear, results_qda, results_rf)
-
-print(df_results)
+#print(df_results)
+# %%

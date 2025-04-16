@@ -1,10 +1,13 @@
 """In this module the QDA classifier is trained and tested"""
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+from sklearn.model_selection import GridSearchCV, StratifiedKFold
+import numpy as np
+import pandas as pd
 
 from evaluate_model_with_kfold import evaluate_model_with_kfold
 
-def qda_func(X, y, n_splits=5):
-    """Train and test QDA classifier
+def qda_with_grid_search(X, y, n_splits=5):
+    """Train and test QDA classifier with grid search.
 
     Args:
         data_train_n_features (numpy.ndarray): training data with selected features
@@ -22,7 +25,20 @@ def qda_func(X, y, n_splits=5):
     # # predict on the test set
     # predictions = qda.predict(data_test_n_features)
 
-    qda = QuadraticDiscriminantAnalysis(reg_param=0.1)
-    results = evaluate_model_with_kfold(X, y, qda, n_splits)
+    # reg_param is to handle situation where the covariance matrix is singular
+    param_grid = {"reg_param": [np.linspace(0.01, 1.0, 5)],
+                  "solver": ['svd', 'lsqr']
+                  }
+    qda = QuadraticDiscriminantAnalysis()
 
-    return results
+    # Cross-validation for hyperparameter tuning, gird search
+    cv = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=42)
+    grid_search = GridSearchCV(qda, param_grid, cv=cv, scoring='accuracy', n_jobs=-1, verbose=0)
+    grid_search.fit(X, y)
+
+
+    results_df = pd.DataFrame(grid_search.cv_results_)
+    top_models = results_df.sort_values(by='mean_test_score', ascending=False).head(3)
+    return top_models
+
+
