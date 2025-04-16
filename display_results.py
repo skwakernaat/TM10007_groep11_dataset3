@@ -1,15 +1,13 @@
+'''This module provides a function to display results from model evaluations in a
+    tabular format. It combines results from different models, flattens them into a
+    DataFrame, and sorts them based on sensitivity. The function can handle both
+    single dictionaries and lists of dictionaries as input.'''
+
 import pandas as pd
 
 def display_results(*results_lists):
-    """
-    Combines and flattens dictionaries of results (single or in lists) into a sorted DataFrame.
-
-    Args:
-        *results_lists: Any number of single dicts or lists of dicts.
-
-    Returns:
-        pd.DataFrame: Sorted by mean sensitivity (descending).
-    """
+    '''Combines and flattens dictionaries of results (single or in lists) into a
+        sorted DataFrame.'''
     all_results = []
 
     # Flatten and normalize input
@@ -56,4 +54,5 @@ def display_results(*results_lists):
 
     df = pd.DataFrame(flat_results)
     df_sorted = df.sort_values(by='mean_sensitivity', ascending=False)
+
     return df_sorted

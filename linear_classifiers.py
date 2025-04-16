@@ -13,6 +13,8 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.model_selection import StratifiedKFold
 
 def linear_classifier_with_grid_search(X, y, n_folds=5):
+    '''This function performs a grid search for linear classifiers. It takes the training data
+        and labels as input and returns the top 3 models based on accuracy.'''
     classifiers_and_grids = {
         "Logistic Regression": (LogisticRegression(max_iter=1000),
             {

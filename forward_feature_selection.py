@@ -1,18 +1,14 @@
+'''This module contains the function select_top_features which is used to select the top n informative
+    features using sklearn's SequentialFeatureSelector. It takes the training data and the number of
+    features to select as input and returns the reduced dataset with the label.'''
+
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_selection import SequentialFeatureSelector
 from sklearn.preprocessing import LabelEncoder
 
 def select_top_features(train_df, n_features=12):
-    """
-    Use sklearn's SequentialFeatureSelector to select the top n informative features.
+    '''Use sklearn's SequentialFeatureSelector to select the top n informative features.'''
 
-    Parameters:
-    - train_df: DataFrame including features, 'label', and 'ID'.
-    - n_features: Number of features to select.
-
-    Returns:
-    - DataFrame with selected features + 'label' column.
-    """
     # Prepare features and label
     X = train_df.drop(columns=["ID", "label"])
     y = LabelEncoder().fit_transform(train_df["label"])

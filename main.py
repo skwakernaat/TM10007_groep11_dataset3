@@ -43,21 +43,12 @@ X_train_scaled, X_test_scaled = scale_data(X_train_features, X_test_features)
 X_train = X_train_scaled
 X_test = X_test_scaled
 
-#rfecv_features(X_train_filtered, y_train)
-
 #%%
 # functions for different classifiers
 results_svm = svm_classifier_with_grid_search(X_train, y_train)
 
-results_svm = qda_with_grid_search(X_train, y_train)
+results_qda = qda_with_grid_search(X_train, y_train)
 
-results_svm = random_forest_classifier_grid_search(X_train, y_train)
+#results_rf = random_forest_classifier_grid_search(X_train, y_train)
 
-results_svm = linear_classifier_with_grid_search(X_train, y_train)
-
-#df_results = display_results(results_svm, results_svm_polykernel, results_linear, results_qda, results_rf)
-
-#print(df_results)
-# %%
-
-plot_learning_curve(results_svm[-1]['model'], X_train, y_train)
+results_linear = linear_classifier_with_grid_search(X_train, y_train)

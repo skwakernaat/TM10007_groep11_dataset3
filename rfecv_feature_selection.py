@@ -1,14 +1,10 @@
-from sklearn.svm import SVC
-from sklearn.model_selection import cross_val_score
-import numpy as np
+'''This module contains the function rfecv_features which is used to perform recursive feature
+    elimination with cross-validation. It uses the SVC classifier to evaluate feature importance'''
+
 import matplotlib.pyplot as plt
 from sklearn import feature_selection
 from sklearn import model_selection
-from sklearn.datasets import make_classification
 from sklearn import svm
-from sklearn.feature_selection import RFECV
-
-
 
 def rfecv_features(data_selected_uni, labels_train):
     '''

@@ -1,9 +1,14 @@
+'''This module contains the function evaluate_model_with_kfold which is used to evaluate a model
+    using K-Fold cross-validation.'''
+
 import numpy as np
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn.linear_model import LogisticRegression  # You can swap in your own model
 
 def evaluate_model_with_kfold(X, y, model=None, n_splits=5):
+    '''This function evaluates a model using K-Fold cross-validation.'''
+
     if model is None:
         model = LogisticRegression(max_iter=1000)
 
