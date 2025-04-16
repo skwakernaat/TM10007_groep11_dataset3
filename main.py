@@ -3,9 +3,6 @@
     performs feature selection, and trains different classifiers.'''
 
 #%%
-from SVM_classifier import svm_classifier
-from SVM_classifier import svm_poly_kernel
-from rfecv_feature_selection import rfecv_features
 from load_data import load_data
 from clean_data import clean_data
 from balance_data import balance_data
@@ -17,7 +14,7 @@ from random_forest import random_forest_classifier_grid_search
 from display_results import display_results
 from plot_learning_curve import plot_learning_curve
 from remove_zero_var import remove_zero_var
-from SVM_classiefier import svm_classifier_with_grid_search
+from SVM_classifier import svm_classifier_with_grid_search
 from linear_classifiers import linear_classifier_with_grid_search
 
 #%%
@@ -50,12 +47,13 @@ X_test = X_test_scaled
 
 #%%
 # functions for different classifiers
-results_svm = svm_classifier(X_train, y_train)
+results_svm = svm_classifier_with_grid_search(X_train, y_train)
 
-grid_qda = qda_with_grid_search(data_train_n_features, labels_train)
-print(grid_qda)
+results_svm = qda_with_grid_search(X_train, y_train)
 
-grid_rf = random_forest_classifier_grid_search(data_train_n_features, labels_train)
+results_svm = random_forest_classifier_grid_search(X_train, y_train)
+
+results_svm = linear_classifier_with_grid_search(X_train, y_train)
 
 #df_results = display_results(results_svm, results_svm_polykernel, results_linear, results_qda, results_rf)
 

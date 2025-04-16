@@ -38,7 +38,7 @@ def svm_classifier_with_grid_search(X, y):
     }
 ]
 
-    svm = SVC()
+    svm = SVC(random_state=42)
     cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
     grid_search = GridSearchCV(svm, param_grid, cv=cv, scoring='accuracy')

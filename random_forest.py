@@ -17,7 +17,7 @@ def random_forest_classifier_grid_search(X, y):
     }
 
     # Definieer het Random Forest model
-    clf = RandomForestClassifier(n_estimators=n_estimators, random_state=42)
+    clf = RandomForestClassifier(random_state=42)
     cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
     grid_search = GridSearchCV(clf, param_grid, cv=cv, scoring='accuracy')
