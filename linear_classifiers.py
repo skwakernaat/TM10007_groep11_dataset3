@@ -3,7 +3,6 @@
 
 from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-from sklearn.svm import SVC
 from evaluate_model_with_kfold import evaluate_model_with_kfold
 
 import numpy as np

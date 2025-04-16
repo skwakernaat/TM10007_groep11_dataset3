@@ -1,9 +1,11 @@
-'''This module contains the function clean_data which is used to clean the data by removing unnecessary columns and replacing GIST and non-GIST with 1 and 0 respectively.'''
+'''This module contains the function clean_data which is used to clean the data by removing
+    unnecessary columns and replacing GIST and non-GIST with 1 and 0 respectively.'''
 
 import pandas as pd
 
 def clean_data(data):
-    '''This function cleans the data by removing unnecessary columns and replacing GIST and non-GIST with 1 and 0 respectively.'''
+    '''This function cleans the data by removing unnecessary columns and replacing GIST and
+        non-GIST with 1 and 0 respectively.'''
     # Make a copy of the dataframe
     data_cleaned = data.copy()
 
