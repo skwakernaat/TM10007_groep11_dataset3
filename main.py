@@ -26,7 +26,7 @@ X_train_unprocessed, X_test_unprocessed, y_train, y_test, feature_names = split_
 
 #%%
 # Checks for the balance between GIST and non-GIST in the training set
-balance_data(y_train)
+check_balance(y_train)
 
 # Forward greedy feature selection on the train and test data based on the training data
 X_train_features, X_test_features = forward_feature_selection(X_train_unprocessed, y_train, X_test_unprocessed, feature_names, n_features=12)
