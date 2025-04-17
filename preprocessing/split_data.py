@@ -9,6 +9,9 @@ def split_data(data):
     labels = data['label']
     data_nolabels = data.drop(columns=['label'])
 
+    # Extract feature names (usd to identify top features)
+    feature_names = data_nolabels.columns.tolist()
+
     # Convert to array
     labels_array = labels.to_numpy()
     data_array = data_nolabels.to_numpy()
@@ -21,4 +24,4 @@ def split_data(data):
     data_train, data_test, labels_train, labels_test = model_selection.train_test_split(data_array,
                             labels_array, test_size=0.20, stratify=labels_array, random_state=42)
 
-    return data_train, data_test, labels_train, labels_test
+    return data_train, data_test, labels_train, labels_test, feature_names

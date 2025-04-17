@@ -2,13 +2,12 @@
     It loads the data, cleans it, splits it into training and test sets, balances the data, scales it,
     performs feature selection, and trains different classifiers.'''
 
-#%%
 from preprocessing.load_data import load_data
 from preprocessing.clean_data import clean_data
 from preprocessing.split_data import split_data
 #from preprocessing.balance_data import balance_data
-from preprocessing.remove_zero_var import remove_zero_var
-from preprocessing.univariate_feature_selection import univariate_feature_selection
+# from preprocessing.remove_zero_var import remove_zero_var
+from preprocessing.forward_feature_selection import forward_feature_selection
 from preprocessing.scale_data import scale_data
 from classifiers.qda_classifier import qda_with_grid_search
 from classifiers.random_forest import random_forest_classifier_grid_search
@@ -24,18 +23,17 @@ data = load_data()
 data_cleaned = clean_data(data)
 
 # Splits the data into training (80%) and test (20%) sets
-X_train_unprocessed, X_test_unprocessed, y_train, y_test = split_data(data_cleaned)
+X_train_unprocessed, X_test_unprocessed, y_train, y_test, feature_names = split_data(data_cleaned)
 
 #%%
 # Checks for the balance between GIST and non-GIST in the training set
 #balance_data(y_train)
 
 # Removes features with near-zero variance from the training and test data
-X_train_filtered, X_test_filtered = remove_zero_var(X_train_unprocessed, X_test_unprocessed)
+# X_train_filtered, X_test_filtered = remove_zero_var(X_train_unprocessed, X_test_unprocessed)
 
-# Univariate feature selection on the train and test data based on the training data
-X_train_features, X_test_features = univariate_feature_selection(X_train_filtered, y_train,
-                                                                 X_test_filtered, n_features=30)
+# Forward greedy feature selection on the train and test data based on the training data
+X_train_features, X_test_features = forward_feature_selection(X_train_unprocessed, y_train, X_test_unprocessed, feature_names, n_features=12)
 
 # Scales the training and test data based on the training data
 X_train_scaled, X_test_scaled = scale_data(X_train_features, X_test_features)
