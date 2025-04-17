@@ -1,11 +1,13 @@
-'''This module contains the function select_top_features which is used to select the top n informative
-    features using sklearn's SequentialFeatureSelector. It takes the training data and the number of
-    features to select as input and returns the reduced dataset with the label.'''
+'''This module contains a function to perform extract a hardcoded list of features. These features
+    were chosen by greedy forward feature selection. The features are hardcoded to avoid the need for
+    retraining the model.'''
 
 import numpy as np
 
 def forward_feature_selection_hardcoded(X_train, X_test, feature_names):
-    '''Use sklearn's SequentialFeatureSelector to select the top n informative features.'''
+    '''This function applies a hardcoded list of features to the training and test data.
+        The features were chosen by greedy forward feature selection. The features are hardcoded
+        to avoid the need for retraining the model.'''
 
     selected_features = ['PREDICT_original_sf_prax_avg_2.5D', 'PREDICT_original_sf_area_avg_2.5D',
         'PREDICT_original_tf_LBP_energy_R8_P24', 'PREDICT_original_tf_GLCM_homogeneityd1.0A1.57',
