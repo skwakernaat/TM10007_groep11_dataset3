@@ -66,7 +66,7 @@ plot_learning_curve(results_rf, X_train, y_train)
 
 #%%
 # Compute the final results on the test set
-best_models = [results_svm[0][0], results_svm[1][0]] #enter manually
+best_models = [] #enter manually
 
 results_best_models = evaluate_model(X_test, y_test, best_models)
 
