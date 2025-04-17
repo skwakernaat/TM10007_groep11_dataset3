@@ -5,7 +5,7 @@
 from preprocessing.load_data import load_data
 from preprocessing.clean_data import clean_data
 from preprocessing.split_data import split_data
-#from preprocessing.balance_data import balance_data
+from preprocessing.checj_data_balance import balance_data
 # from preprocessing.remove_zero_var import remove_zero_var
 from preprocessing.forward_feature_selection import forward_feature_selection
 from preprocessing.scale_data import scale_data
@@ -27,7 +27,7 @@ X_train_unprocessed, X_test_unprocessed, y_train, y_test, feature_names = split_
 
 #%%
 # Checks for the balance between GIST and non-GIST in the training set
-#balance_data(y_train)
+balance_data(y_train)
 
 # Removes features with near-zero variance from the training and test data
 # X_train_filtered, X_test_filtered = remove_zero_var(X_train_unprocessed, X_test_unprocessed)
