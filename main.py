@@ -5,8 +5,7 @@
 from preprocessing.load_data import load_data
 from preprocessing.clean_data import clean_data
 from preprocessing.split_data import split_data
-from preprocessing.checj_data_balance import balance_data
-# from preprocessing.remove_zero_var import remove_zero_var
+from preprocessing.check_data_balance import balance_data
 from preprocessing.forward_feature_selection import forward_feature_selection
 from preprocessing.scale_data import scale_data
 from classifiers.qda_classifier import qda_with_grid_search
@@ -28,9 +27,6 @@ X_train_unprocessed, X_test_unprocessed, y_train, y_test, feature_names = split_
 #%%
 # Checks for the balance between GIST and non-GIST in the training set
 balance_data(y_train)
-
-# Removes features with near-zero variance from the training and test data
-# X_train_filtered, X_test_filtered = remove_zero_var(X_train_unprocessed, X_test_unprocessed)
 
 # Forward greedy feature selection on the train and test data based on the training data
 X_train_features, X_test_features = forward_feature_selection(X_train_unprocessed, y_train, X_test_unprocessed, feature_names, n_features=12)
