@@ -16,7 +16,7 @@ def plot_learning_curve(clfs, X, y, cv=5, scoring='accuracy', train_sizes=np.lin
     # Create a StratifiedKFold object for cross-validation
     cv = StratifiedKFold(n_splits=cv, shuffle=True, random_state=random_state)
 
-    for idx, (clf, []) in enumerate(clfs):
+    for idx, (clf, score) in enumerate(clfs):
         ax = axes[idx]
 
         # Get the classifier name
