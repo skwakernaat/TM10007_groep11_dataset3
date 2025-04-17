@@ -6,8 +6,8 @@ def check_balance(y_train):
 
     # Check if the amount of 1's and 0's are (approximately) equal
     # (check for data imbalance)
-    count_gist = y_train_balanced.value_counts()[1]
-    count_non_gist = y_train_balanced.value_counts()[0]
+    count_gist = y_train_balanced.count(1)
+    count_non_gist = y_train_balanced.count(0)
 
     percentage_gist = count_gist / (count_gist+count_non_gist) * 100
     percentage_non_gist = count_non_gist / (count_gist+count_non_gist) * 100
