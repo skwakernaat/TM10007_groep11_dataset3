@@ -2,11 +2,13 @@
     It loads the data, cleans it, splits it into training and test sets, balances the data, scales it,
     performs feature selection, and trains different classifiers.'''
 #%%
+import numpy as np
 from preprocessing.load_data import load_data
 from preprocessing.clean_data import clean_data
 from preprocessing.split_data import split_data
 from preprocessing.check_data_balance import check_balance
 from preprocessing.forward_feature_selection import forward_feature_selection
+from preprocessing.forward_feature_selection_hardcoded import forward_feature_selection_hardcoded
 from preprocessing.scale_data import scale_data
 from classifiers.qda_classifier import qda_with_grid_search
 from classifiers.random_forest import random_forest_classifier_grid_search
@@ -29,8 +31,12 @@ X_train_unprocessed, X_test_unprocessed, y_train, y_test, feature_names = split_
 check_balance(y_train)
 
 # Forward greedy feature selection on the train and test data based on the training data
-X_train_features, X_test_features = forward_feature_selection(X_train_unprocessed, y_train,
-                                                X_test_unprocessed, feature_names, n_features=12)
+#X_train_features, X_test_features = forward_feature_selection(X_train_unprocessed, y_train,
+#                                                X_test_unprocessed, feature_names, n_features=12)
+
+# Hardcode the results of the forward greedy feature selection because of computation time
+X_train_features, X_test_features = forward_feature_selection_hardcoded(X_train_unprocessed,
+                                                                X_test_unprocessed, feature_names)
 
 # Scales the training and test data based on the training data
 X_train_scaled, X_test_scaled = scale_data(X_train_features, X_test_features)
@@ -61,7 +67,7 @@ plot_learning_curve(results_rf, X_train, y_train)
 
 #%%
 # Compute the final results on the test set
-best_models = [] #enter manually
+best_models = [results_svm[0][0], results_svm[1][0]] #enter manually
 
 results_best_models = evaluate_model(X_test, y_test, best_models)
 
