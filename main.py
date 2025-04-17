@@ -1,7 +1,8 @@
 '''This module contains the main function which is used to run the entire pipeline of the project.
     It loads the data, cleans it, splits it into training and test sets, balances the data, scales it,
     performs feature selection, and trains different classifiers.'''
-
+#%%
+import importlib
 from preprocessing.load_data import load_data
 from preprocessing.clean_data import clean_data
 from preprocessing.split_data import split_data
@@ -12,6 +13,8 @@ from classifiers.qda_classifier import qda_with_grid_search
 from classifiers.random_forest import random_forest_classifier_grid_search
 from classifiers.SVM_classifier import svm_classifier_with_grid_search
 from classifiers.linear_classifiers import linear_classifier_with_grid_search
+import results.plot_learning_curve
+importlib.reload(results.plot_learning_curve)
 from results.plot_learning_curve import plot_learning_curve
 from results.evaluate_model import evaluate_model
 
@@ -50,18 +53,14 @@ results_rf = random_forest_classifier_grid_search(X_train, y_train)
 results_linear = linear_classifier_with_grid_search(X_train, y_train)
 #%%
 # Plot the learning curves for each classifier
-for model in results_linear.values():
-    for clf, score in model:
-        plot_learning_curve(clf, X_train, y_train)
+for models in results_linear.values():
+    plot_learning_curve(models, X_train, y_train)
 
-for clf in results_qda:
-    plot_learning_curve(clf[0], X_train, y_train)
+plot_learning_curve(results_qda, X_train, y_train)
 
-for clf in results_svm:
-    plot_learning_curve(clf[0], X_train, y_train)
+plot_learning_curve(results_svm, X_train, y_train)
 
-for clf in results_rf:
-    plot_learning_curve(clf[0], X_train, y_train)
+plot_learning_curve(results_rf, X_train, y_train)
 
 #%%
 # Compute the final results on the test set
