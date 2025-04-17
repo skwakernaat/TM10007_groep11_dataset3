@@ -2,7 +2,6 @@
     It loads the data, cleans it, splits it into training and test sets, balances the data, scales it,
     performs feature selection, and trains different classifiers.'''
 #%%
-import importlib
 from preprocessing.load_data import load_data
 from preprocessing.clean_data import clean_data
 from preprocessing.split_data import split_data
@@ -13,8 +12,6 @@ from classifiers.qda_classifier import qda_with_grid_search
 from classifiers.random_forest import random_forest_classifier_grid_search
 from classifiers.SVM_classifier import svm_classifier_with_grid_search
 from classifiers.linear_classifiers import linear_classifier_with_grid_search
-import results.plot_learning_curve
-importlib.reload(results.plot_learning_curve)
 from results.plot_learning_curve import plot_learning_curve
 from results.evaluate_model import evaluate_model
 
