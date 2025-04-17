@@ -2,12 +2,9 @@
     on the data and evaluate its performance.'''
 
 import numpy as np
-import pandas as pd
 from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-from sklearn.model_selection import GridSearchCV, StratifiedKFold
-
-from grid_search import grid_search
+from classifiers.grid_search import grid_search
 
 def linear_classifier_with_grid_search(X, y, n_folds=5):
     '''This function performs a grid search for linear classifiers. It takes the training data

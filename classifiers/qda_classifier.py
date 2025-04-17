@@ -1,10 +1,9 @@
 """In this module the QDA classifier is trained and tested"""
 
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+from classifiers.grid_search import grid_search
 
-from grid_search import grid_search
-
-def qda_with_grid_search(X, y, n_splits=5):
+def qda_with_grid_search(X, y):
     """Train and test QDA classifier with grid search."""
     # Make QDA model
     clf = QuadraticDiscriminantAnalysis()
@@ -17,6 +16,3 @@ def qda_with_grid_search(X, y, n_splits=5):
     top_3_df, top_3_models = grid_search(X, y, clf, param_grid)
 
     return top_3_models
-
-
-

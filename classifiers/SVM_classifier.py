@@ -2,11 +2,8 @@
     perform a grid search for the SVM classifier.'''
 
 import numpy as np
-import pandas as pd
 from sklearn.svm import SVC
-from sklearn.model_selection import GridSearchCV, StratifiedKFold
-
-from grid_search import grid_search
+from classifiers.grid_search import grid_search
 
 def svm_classifier_with_grid_search(X, y):
     '''This function performs a grid search for the SVM classifier. It takes the training data
@@ -18,18 +15,18 @@ def svm_classifier_with_grid_search(X, y):
     param_grid = [
     {
         'kernel': ['linear'],
-        'C': np.linspace(0.01, 1, 5)  # 5 values from 0.01 to 1
+        'C': np.linspace(0.01, 0.5, 5)  # 5 values from 0.01 to 1
     },
     {
         'kernel': ['rbf'],
-        'C': np.linspace(0.01, 1, 5),
+        'C': np.linspace(0.01, 0.5, 5),
         'gamma': list(np.logspace(-3, -1, 4)),
     },
     {
         'kernel': ['poly'],
-        'C': list(np.linspace(0.01, 1, 5)),
+        'C': list(np.linspace(0.01, 0.5, 5)),
         'gamma': list(np.logspace(-3, -1, 4)),
-        'degree': list(range(1, 6, 1)),
+        'degree': list(range(1, 4, 1)),
         'coef0': list(np.linspace(0.01, 1, 5))
     }
 ]

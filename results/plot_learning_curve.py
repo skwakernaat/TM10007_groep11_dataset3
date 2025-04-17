@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import learning_curve
 from sklearn.model_selection import StratifiedKFold
 
-
 def plot_learning_curve(clf, X, y, cv=5, scoring='accuracy', train_sizes=np.linspace(0.1, 1.0, 10),
                         random_state=42):
     """Plot a learning curve of a given classifier."""

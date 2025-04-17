@@ -8,9 +8,10 @@ def load_data():
     '''This function loads the GIST radiomic features dataset from a CSV file.'''
 
     # Get the current directory of this file
-    this_directory = os.path.dirname(os.path.abspath(__file__))
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    parent_dir = os.path.dirname(current_dir)
 
     # Load the dataset
-    data = pd.read_csv(os.path.join(this_directory, 'GIST_radiomicFeatures.csv'), index_col=0)
+    data = pd.read_csv(os.path.join(parent_dir, 'GIST_radiomicFeatures.csv'), index_col=0)
 
     return data

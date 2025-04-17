@@ -1,7 +1,8 @@
-from sklearn.model_selection import GridSearchCV, StratifiedKFold
-import pandas as pd
-import numpy as np
+'''This module contains a function to perform grid search for hyperparameter tuning of classifiers.
+    It uses StratifiedKFold for cross-validation and returns the top 3 models based on accuracy.'''
 
+import pandas as pd
+from sklearn.model_selection import GridSearchCV, StratifiedKFold
 
 def grid_search(X, y, clf, param_grid):
     '''This function performs a grid search for the given classifier. It takes the training data,
@@ -9,7 +10,7 @@ def grid_search(X, y, clf, param_grid):
 
 
     cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-    grid_search_classifier = GridSearchCV(clf, param_grid, cv=cv, scoring='accuracy')
+    grid_search_classifier = GridSearchCV(clf, param_grid, cv=cv, scoring='roc_auc')
     grid_search_classifier.fit(X, y)
     results_df = pd.DataFrame(grid_search_classifier.cv_results_)
     top_3_df = results_df.sort_values(by='mean_test_score', ascending=False).head(3)
