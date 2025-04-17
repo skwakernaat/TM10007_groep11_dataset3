@@ -28,10 +28,10 @@ X_train_unprocessed, X_test_unprocessed, y_train, y_test = split_data(data_clean
 
 #%%
 # Checks for the balance between GIST and non-GIST in the training set
-X_train_balanced, X_test_balanced = balance_data(X_train_unprocessed, y_train, X_test_unprocessed)
+balance_data(y_train)
 
 # Removes features with near-zero variance from the training and test data
-X_train_filtered, X_test_filtered = remove_zero_var(X_train_balanced, X_test_balanced)
+X_train_filtered, X_test_filtered = remove_zero_var(X_train_unprocessed, X_test_unprocessed)
 
 # Univariate feature selection on the train and test data based on the training data
 X_train_features, X_test_features = univariate_feature_selection(X_train_filtered, y_train,
@@ -49,6 +49,6 @@ results_svm = svm_classifier_with_grid_search(X_train, y_train)
 
 results_qda = qda_with_grid_search(X_train, y_train)
 
-#results_rf = random_forest_classifier_grid_search(X_train, y_train)
+results_rf = random_forest_classifier_grid_search(X_train, y_train)
 
 results_linear = linear_classifier_with_grid_search(X_train, y_train)
