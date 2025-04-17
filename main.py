@@ -15,6 +15,7 @@ from classifiers.random_forest import random_forest_classifier_grid_search
 from classifiers.SVM_classifier import svm_classifier_with_grid_search
 from classifiers.linear_classifiers import linear_classifier_with_grid_search
 from results.plot_learning_curve import plot_learning_curve
+from results.evaluate_model import evaluate_model
 
 #%%
 data = load_data()
@@ -51,32 +52,26 @@ results_qda = qda_with_grid_search(X_train, y_train)
 results_rf = random_forest_classifier_grid_search(X_train, y_train)
 
 results_linear = linear_classifier_with_grid_search(X_train, y_train)
-print(results_linear)
-print(results_qda)
-print(results_svm)
-print(results_rf)
+#%%
+# Plot the learning curves for each classifier
+for model in results_linear.values():
+    for clf, score in model:
+        plot_learning_curve(clf, X_train, y_train)
 
-plot_learning_curve(results_linear['Logistic Regression'][0][0], X_train, y_train)
-plot_learning_curve(results_linear['Logistic Regression'][1][0], X_train, y_train)
-plot_learning_curve(results_linear['Logistic Regression'][2][0], X_train, y_train)
+for clf in results_qda:
+    plot_learning_curve(clf[0], X_train, y_train)
 
-plot_learning_curve(results_linear['LDA'][0][0], X_train, y_train)
-plot_learning_curve(results_linear['LDA'][1][0], X_train, y_train)
+for clf in results_svm:
+    plot_learning_curve(clf[0], X_train, y_train)
 
-plot_learning_curve(results_linear['SGD Classifier'][0][0], X_train, y_train)
-plot_learning_curve(results_linear['SGD Classifier'][1][0], X_train, y_train)
-plot_learning_curve(results_linear['SGD Classifier'][2][0], X_train, y_train)
+for clf in results_rf:
+    plot_learning_curve(clf[0], X_train, y_train)
 
-plot_learning_curve(results_qda[0][0], X_train, y_train)
-plot_learning_curve(results_qda[1][0], X_train, y_train)
-plot_learning_curve(results_qda[2][0], X_train, y_train)
+#%%
+# Compute the final results on the test set
+best_models = []
 
-plot_learning_curve(results_svm[0][0], X_train, y_train)
-plot_learning_curve(results_svm[1][0], X_train, y_train)
-plot_learning_curve(results_svm[2][0], X_train, y_train)
+results_best_models = evaluate_model(X_test, y_test, best_models)
 
-plot_learning_curve(results_rf[0][0], X_train, y_train)
-plot_learning_curve(results_rf[1][0], X_train, y_train)
-plot_learning_curve(results_rf[2][0], X_train, y_train)
-
-
+print(results_best_models)
+# %%

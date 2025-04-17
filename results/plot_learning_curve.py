@@ -13,6 +13,13 @@ def plot_learning_curve(clf, X, y, cv=5, scoring='accuracy', train_sizes=np.lins
     # Create a StratifiedKFold object for cross-validation
     cv = StratifiedKFold(n_splits=cv, shuffle=True, random_state=random_state)
 
+    # Get the classifier name
+    clf_name = clf.__class__.__name__
+
+    # Get the parameters of the classifier
+    params = clf.get_params()
+    params_str = ', '.join([f'{k}={v}' for k, v in params.items()])
+
     # Generate the learning curve data
     train_sizes_abs, train_scores, val_scores = learning_curve(
         estimator=clf,
@@ -40,8 +47,8 @@ def plot_learning_curve(clf, X, y, cv=5, scoring='accuracy', train_sizes=np.lins
                      train_scores_mean + train_scores_std, alpha=0.1)
     plt.fill_between(train_sizes_abs, val_scores_mean - val_scores_std,
                      val_scores_mean + val_scores_std, alpha=0.1)
-
-    plt.title('Learning Curve')
+    plt.suptitle(f'Learning Curve of {clf_name}', fontsize=14)
+    plt.title(f'Parameters: {params_str}', fontsize=6, loc='center')
     plt.xlabel('Training Set Size')
     plt.ylabel(scoring.capitalize())
     plt.legend(loc='best')
