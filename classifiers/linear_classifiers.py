@@ -18,10 +18,9 @@ def linear_classifier_with_grid_search(X, y, n_folds=5):
             }
         ),
         "LDA": (LinearDiscriminantAnalysis(),
-            {
-                "solver": ['svd', 'lsqr'],
-                "shrinkage": [None]
-            }
+            [
+        {"solver": ["svd"]},  # no shrinkage allowed
+        {"solver": ["lsqr"], "shrinkage": [None, "auto"]},]
         ),
         "SGD Classifier": (SGDClassifier(loss='log_loss', max_iter=1000),
             {
