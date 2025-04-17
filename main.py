@@ -2,7 +2,6 @@
     It loads the data, cleans it, splits it into training and test sets, balances the data, scales it,
     performs feature selection, and trains different classifiers.'''
 #%%
-import numpy as np
 from preprocessing.load_data import load_data
 from preprocessing.clean_data import clean_data
 from preprocessing.split_data import split_data

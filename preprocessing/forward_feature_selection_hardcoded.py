@@ -1,6 +1,6 @@
 '''This module contains a function to perform extract a hardcoded list of features. These features
-    were chosen by greedy forward feature selection. The features are hardcoded to avoid the need for
-    retraining the model.'''
+    were chosen by greedy forward feature selection. The features are hardcoded to avoid the need
+    for retraining the model.'''
 
 import numpy as np
 
@@ -17,8 +17,19 @@ def forward_feature_selection_hardcoded(X_train, X_test, feature_names):
         'PREDICT_original_tf_Gabor_mean_F0.5_A0.79', 'PREDICT_original_tf_Gabor_max_F0.5_A2.36',
         'PREDICT_original_phasef_phasesym_quartile_range_WL3_N5']
 
-    selected_indices = [np.where(feature_names == name)[0][0] for name in selected_features]
+    # Convert to numpy arrays if they aren't already
+    feature_names = np.array(feature_names)
+    selected_features = np.array(selected_features)
 
+    # Make sure all strings are stripped and lowercase (optional, but safer)
+    feature_names_clean = np.char.strip(feature_names)
+    selected_features_clean = np.char.strip(selected_features)
+
+    # Get indices of selected features in the feature_names array
+    selected_indices = [np.where(feature_names_clean == name)[0][0] for
+                        name in selected_features_clean]
+
+    # Now use those indices to extract features
     X_train_features = X_train[:, selected_indices]
     X_test_features = X_test[:, selected_indices]
 
