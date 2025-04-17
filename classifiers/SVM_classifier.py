@@ -20,12 +20,12 @@ def svm_classifier_with_grid_search(X, y):
     {
         'kernel': ['rbf'],
         'C': np.linspace(0.01, 0.5, 5),
-        'gamma': list(np.logspace(-3, -1, 4)),
+        'gamma': ["scale", "auto"]
     },
     {
         'kernel': ['poly'],
         'C': list(np.linspace(0.01, 0.5, 5)),
-        'gamma': list(np.logspace(-3, -1, 4)),
+        'gamma': ["scale", "auto"],
         'degree': list(range(1, 4, 1)),
         'coef0': list(np.linspace(0.01, 1, 5))
     }
