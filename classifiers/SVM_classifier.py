@@ -10,7 +10,7 @@ def svm_classifier_with_grid_search(X, y):
         and labels as input and returns the top 3 models based on accuracy.'''
 
     # Create SVM model
-    clf = SVC(random_state=42)
+    SVC(probability=True, random_state=42)
     # Define parameter grid with different kernels and their respective parameters
     param_grid = [
     {
