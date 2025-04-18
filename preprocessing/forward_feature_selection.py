@@ -8,13 +8,13 @@ def forward_feature_selection(X_train, y_train, X_test, feature_names, n_feature
     '''Use sklearn's SequentialFeatureSelector to select the top n informative features.'''
 
     # Create model and feature selector
-    model = RandomForestClassifier(n_estimators=50, random_state=42)
+    model = RandomForestClassifier(n_estimators=100, random_state=42)
     selector = SequentialFeatureSelector(
         model,
         n_features_to_select=n_features,
         direction='forward',
         scoring='roc_auc',
-        cv=2,
+        cv=3,
         n_jobs=-1
     )
 
@@ -23,7 +23,7 @@ def forward_feature_selection(X_train, y_train, X_test, feature_names, n_feature
 
     # Get selected feature names
     selected_mask = selector.get_support()  # Boolean mask of selected features
-    selected_columns = [feature_names[i] for i, selected in enumerate(selected_mask) if selected]
-    print(f"Selected features: {selected_columns}")
+    selected_features = [feature_names[i] for i, selected in enumerate(selected_mask) if selected]
+    print(f"Selected features: {selected_features}")
 
     return X_train_features, X_test_features
