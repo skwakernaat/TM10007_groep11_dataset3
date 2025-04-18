@@ -1,7 +1,6 @@
 '''This module contains the function final_test which is used to evaluate the performance
     of different classifiers on the test set. It calculates accuracy, sensitivity,
     specificity, and ROC AUC score for each classifier.'''
-import pandas as pd
 
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import confusion_matrix, accuracy_score
@@ -36,6 +35,11 @@ def evaluate_model(X_test, y_test, clfs):
         'sensitivity': sens,
         'specificity': spec
         }
+
+    for clf_name, scores in results.items():
+        print(f"Results for {clf_name}:")
+        for metric, value in scores.items():
+            print(f"  {metric}: {value:.4f}")
 
     return results
 
