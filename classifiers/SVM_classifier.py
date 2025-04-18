@@ -19,15 +19,15 @@ def svm_classifier_with_grid_search(X, y):
     },
     {
         'kernel': ['rbf'],
-        'C': np.linspace(0.01, 0.5, 5),
-        'gamma': list(np.logspace(-3, -1, 4)),
+        'C': np.linspace(0.01, 0.25, 5),
+        'gamma': ["scale", "auto", 1e-3, 1e-2]
     },
     {
         'kernel': ['poly'],
-        'C': list(np.linspace(0.01, 0.5, 5)),
-        'gamma': list(np.logspace(-3, -1, 4)),
+        'C': list(np.linspace(0.01, 0.25, 5)),
+        'gamma': ["scale", "auto", 1e-3, 1e-2, 0.1],
         'degree': list(range(1, 4, 1)),
-        'coef0': list(np.linspace(0.01, 1, 5))
+        'coef0': list(np.linspace(0.01, 0.5, 5))
     }
 ]
     # Perform grid search with cross-validation and get the top 3 models

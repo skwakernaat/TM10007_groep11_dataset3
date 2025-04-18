@@ -13,9 +13,11 @@ def random_forest_classifier_grid_search(X, y):
     # Define hyperparameters for grid search
     param_grid = {
         'n_estimators': [100, 200, 300],
-        'max_depth': [5, 10, 15, 20],
-        'min_samples_split': [2, 4, 6],
-        'min_samples_leaf': [5, 8, 10]
+        'max_depth': [5, 7],
+        'min_samples_split': [4, 6],
+        'min_samples_leaf': [4, 6],
+        "min_impurity_decrease": [0.01],
+        "bootstrap": [True, False],
     }
 
     # Perform grid search with cross-validation and get the top 3 models
