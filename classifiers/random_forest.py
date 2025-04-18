@@ -7,6 +7,7 @@ from classifiers.grid_search import grid_search
 def random_forest_classifier_grid_search(X, y):
     '''This function performs a grid search for the Random Forest classifier. It takes the training
         data and labels as input and returns the top 3 models based on accuracy.'''
+
     # Make random forest model
     clf = RandomForestClassifier(random_state=42, n_jobs=-1)
 
@@ -19,6 +20,6 @@ def random_forest_classifier_grid_search(X, y):
     }
 
     # Perform grid search with cross-validation and get the top 3 models
-    top_3_df, top_3_models = grid_search(X, y, clf, param_grid)
+    top_3_models = grid_search(X, y, clf, param_grid)[1]
 
     return top_3_models

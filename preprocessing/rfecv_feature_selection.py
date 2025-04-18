@@ -7,9 +7,7 @@ from sklearn import model_selection
 from sklearn import svm
 
 def rfecv_features(data_selected_uni, labels_train):
-    '''
-    Recursive feature elimination with cross-validation.
-    '''
+    '''Recursive feature elimination with cross-validation.'''
 
     # Create the RFE object and compute a cross-validated score.
     #SVC will be used to evaluate feature importance based on classification performance.
