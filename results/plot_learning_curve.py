@@ -40,18 +40,18 @@ def plot_learning_curve(clf, X, y, cv=5, scoring='accuracy', train_sizes=np.lins
     val_scores_std = np.std(val_scores, axis=1)
 
     # Plotting the learning curve
-    plt.figure(figsize=(8, 6))
-    plt.plot(train_sizes_abs, train_scores_mean, 'o-', label='Training score')
-    plt.plot(train_sizes_abs, val_scores_mean, 'o-', label='Validation score')
-    plt.fill_between(train_sizes_abs, train_scores_mean - train_scores_std,
-                     train_scores_mean + train_scores_std, alpha=0.1)
-    plt.fill_between(train_sizes_abs, val_scores_mean - val_scores_std,
-                     val_scores_mean + val_scores_std, alpha=0.1)
-    plt.suptitle(f'Learning Curve of {clf_name}', fontsize=14)
-    plt.title(f'Parameters: {params_str}', fontsize=6, loc='center')
-    plt.xlabel('Training Set Size')
-    plt.ylabel(scoring.capitalize())
-    plt.legend(loc='best')
-    plt.grid(True)
-    plt.tight_layout()
-    plt.show()
+    # plt.figure(figsize=(8, 6))
+    # plt.plot(train_sizes_abs, train_scores_mean, 'o-', label='Training score')
+    # plt.plot(train_sizes_abs, val_scores_mean, 'o-', label='Validation score')
+    # plt.fill_between(train_sizes_abs, train_scores_mean - train_scores_std,
+    #                  train_scores_mean + train_scores_std, alpha=0.1)
+    # plt.fill_between(train_sizes_abs, val_scores_mean - val_scores_std,
+    #                  val_scores_mean + val_scores_std, alpha=0.1)
+    # plt.suptitle(f'Learning Curve of {clf_name}', fontsize=14)
+    # plt.title(f'Parameters: {params_str}', fontsize=6, loc='center')
+    # plt.xlabel('Training Set Size')
+    # plt.ylabel(scoring.capitalize())
+    # plt.legend(loc='best')
+    # plt.grid(True)
+    # plt.tight_layout()
+    # plt.show()

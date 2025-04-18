@@ -13,7 +13,7 @@ from classifiers.random_forest import random_forest_classifier_grid_search
 from classifiers.SVM_classifier import svm_classifier_with_grid_search
 from classifiers.linear_classifiers import linear_classifier_with_grid_search
 from results.plot_learning_curve import plot_learning_curve
-from results.evaluate_model import evaluate_model, save_evaluation_results
+from results.evaluate_model import evaluate_model
 
 #%%
 data = load_data()
@@ -81,6 +81,8 @@ best_models = [
 # print(results_best_models)
 
 results = evaluate_model(X_test, y_test, best_models)
-save_evaluation_results(results)
+
+for model, result in zip(best_models, results):
+    print(f"Model: {model.__class__.__name__}, Results: {result}")
 
 # %%

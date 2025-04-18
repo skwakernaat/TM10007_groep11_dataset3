@@ -39,27 +39,27 @@ def evaluate_model(X_test, y_test, clfs):
 
     return results
 
-def save_evaluation_results(results: dict, output_path="results/model_performance.csv"):
-    """
-    Saves classifier evaluation results including hyperparameters to a CSV file.
-    """
-    import pandas as pd
-    import os
+# def save_evaluation_results(results: dict, output_path="results/model_performance.csv"):
+#     """
+#     Saves classifier evaluation results including hyperparameters to a CSV file.
+#     """
+#     import pandas as pd
+#     import os
 
-    rows = []
-    for clf_name, metrics in results.items():
-        flat_row = {
-            'classifier': clf_name,
-            'accuracy': metrics['accuracy'],
-            'roc_auc': metrics['roc_auc'],
-            'sensitivity': metrics['sensitivity'],
-            'specificity': metrics['specificity'],
-        }
-        # Flatten hyperparameters into one column
-        flat_row['hyperparameters'] = str(metrics['hyperparameters'])
-        rows.append(flat_row)
+#     rows = []
+#     for clf_name, metrics in results.items():
+#         flat_row = {
+#             'classifier': clf_name,
+#             'accuracy': metrics['accuracy'],
+#             'roc_auc': metrics['roc_auc'],
+#             'sensitivity': metrics['sensitivity'],
+#             'specificity': metrics['specificity'],
+#         }
+#         # Flatten hyperparameters into one column
+#         flat_row['hyperparameters'] = str(metrics['hyperparameters'])
+#         rows.append(flat_row)
 
-    df = pd.DataFrame(rows)
+#     df = pd.DataFrame(rows)
 
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    df.to_csv(output_path, index=False)
+#     os.makedirs(os.path.dirname(output_path), exist_ok=True)
+#     df.to_csv(output_path, index=False)
