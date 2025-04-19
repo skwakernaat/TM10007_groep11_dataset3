@@ -1,6 +1,7 @@
 '''This module contains the function plot_learning_curve which is used to plot the learning curve
     of a given classifier.'''
 
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import learning_curve, StratifiedKFold
@@ -46,3 +47,5 @@ def plot_learning_curve(clfs, X, y, cv=5, scoring='accuracy',
         filename = f"learning_curve_{name.lower().replace(' ', '_')}.png"
         fig.savefig(filename, dpi=300)
         plt.close(fig)
+
+        print(f"Saved learning curve: {os.path.abspath(filename)}")
