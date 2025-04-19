@@ -3,49 +3,48 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.model_selection import learning_curve
-from sklearn.model_selection import StratifiedKFold
-from IPython.display import display
+from sklearn.model_selection import learning_curve, StratifiedKFold
 
-def plot_learning_curve(clfs, X, y, cv=5, scoring='accuracy', train_sizes=np.linspace(0.1, 1.0, 10),
-                        random_state=42):
-    '''This function plots the learning curve of a given classifier.'''
+def plot_learning_curve(clfs, X, y, cv=5, scoring='accuracy',
+                        train_sizes=np.linspace(0.1, 1.0, 10), random_state=42):
+    '''Plot learning curves from the selected classifiers.'''
 
-    # Set up 3 subplots vertically
-    _, axes = plt.subplots(nrows=len(clfs), ncols=1, figsize=(8, 12), sharex=True)
+    # Support for both dict.values() and simple lists
+    if isinstance(clfs, dict):
+        clfs = list(clfs.values())
 
-    # Create a StratifiedKFold object for cross-validation
+    # Flatten lists of tuples if needed
+    flat_clfs = []
+    for item in clfs:
+        if isinstance(item, tuple):
+            flat_clfs.append(item)
+        elif isinstance(item, list) and all(isinstance(x, tuple) for x in item):
+            flat_clfs.extend(item)
+        else:
+            raise ValueError("Expected a list of (model, score) tuples or dict of such lists.")
+
+    # Setup plots
+    fig, axes = plt.subplots(nrows=len(flat_clfs), ncols=1, figsize=(8, 4 * len(flat_clfs)), sharex=True)
+    if len(flat_clfs) == 1:
+        axes = [axes]
+
     cv = StratifiedKFold(n_splits=cv, shuffle=True, random_state=random_state)
 
-    for idx, (clf, _) in enumerate(clfs):
+    for idx, (clf, _) in enumerate(flat_clfs):
         ax = axes[idx]
+        name = clf.__class__.__name__
 
-        # Get the classifier name
-        clf_name = clf.__class__.__name__
-
-        # Get the parameters of the classifier
-        params = clf.get_params()
-        params_str = ', '.join([f'{k}={v}' for k, v in params.items()])
-
-        # Generate the learning curve data
         train_sizes_abs, train_scores, val_scores = learning_curve(
-            estimator=clf,
-            X=X,
-            y=y,
-            train_sizes=train_sizes,
-            cv=cv,
-            scoring=scoring,
-            n_jobs=-1,
-            shuffle=True,
-            random_state=random_state,
+            estimator=clf, X=X, y=y,
+            train_sizes=train_sizes, cv=cv,
+            scoring=scoring, n_jobs=-1
         )
 
-        # Calculate the mean and standard deviation of training and validation scores
         train_scores_mean = np.mean(train_scores, axis=1)
         train_scores_std = np.std(train_scores, axis=1)
         val_scores_mean = np.mean(val_scores, axis=1)
         val_scores_std = np.std(val_scores, axis=1)
-        # Plot on this subplot
+
         ax.plot(train_sizes_abs, train_scores_mean, 'o-', label='Training score')
         ax.plot(train_sizes_abs, val_scores_mean, 'o-', label='Validation score')
         ax.fill_between(train_sizes_abs, train_scores_mean - train_scores_std,
@@ -53,17 +52,11 @@ def plot_learning_curve(clfs, X, y, cv=5, scoring='accuracy', train_sizes=np.lin
         ax.fill_between(train_sizes_abs, val_scores_mean - val_scores_std,
                         val_scores_mean + val_scores_std, alpha=0.1)
 
-        # Titles and labels
-        ax.set_title(f'Parameters: {params_str}', fontsize=6)
+        ax.set_title(name)
         ax.set_ylabel(scoring.capitalize())
+        ax.legend(loc='best')
         ax.grid(True)
-        ax.legend(loc='best', fontsize=8)
 
-    # Common X label
     axes[-1].set_xlabel("Training Set Size")
-
-    # Adjust spacing
-    plt.suptitle(f"Learning Curves for {clf_name} Variants", fontsize=16)
-    plt.tight_layout(rect=[0, 0, 1, 0.95])  # leave space for the suptitle
+    plt.tight_layout()
     plt.show()
-    display(plt.gcf())  #ensures rendering in Google Colab
