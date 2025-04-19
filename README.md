@@ -27,9 +27,7 @@ Click the badge below to launch the full pipeline in Google Colab:
   - `split_data.py` – Splits the data into training and testing sets.
   - `scale_data.py` – Scales feature values.
   - `check_data_balance.py` – Checks for class imbalance.
-  - `load_feature_selection.py` – Loads or runs feature selection.
   - `forward_feature_selection.py` – Applies sequential feature selection.
-  - `forward_feature_selection_hardcoded.py` – Applies pre-selected features.
 
 - `classifiers/`  
   Contains implementations and grid search tuning for different classifiers:
