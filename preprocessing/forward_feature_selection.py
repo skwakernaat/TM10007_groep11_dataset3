@@ -14,9 +14,6 @@ def forward_feature_selection(X_train, y_train, X_test, y_test, feature_names):
     n_samples = len(y_train) + len(y_test)
     n_classes = len(np.unique(y_train))
     n_features = math.floor(n_samples / (10 * n_classes))
-    print(n_samples)
-    print(n_classes)
-    print(n_features)
 
     # Create model and feature selector
     model = RandomForestClassifier(n_estimators=100, random_state=42)
