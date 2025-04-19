@@ -39,8 +39,7 @@ X_train_scaled, X_test_scaled = scale_data(X_train_features, X_test_features)
 X_train = X_train_scaled.copy()
 X_test = X_test_scaled.copy()
 
-#%% Making the classifiers
-# Makes the top 3 models for each classifier
+#%% Making the top 3 models for each classifier
 results_svm = svm_classifier_with_grid_search(X_train, y_train)
 
 results_qda = qda_with_grid_search(X_train, y_train)
@@ -49,8 +48,6 @@ results_rf = random_forest_classifier_grid_search(X_train, y_train)
 
 results_linear = linear_classifier_with_grid_search(X_train, y_train)
 #%% Plot the learning curves for each classifier
-# Plot the learning curves for each classifier
-# Plot the learning curves for each classifier
 for models in results_linear.values():
     plot_learning_curve(models, X_train, y_train)
 
