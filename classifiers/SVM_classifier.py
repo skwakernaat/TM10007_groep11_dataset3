@@ -11,6 +11,7 @@ def svm_classifier_with_grid_search(X, y):
 
     # Create SVM model
     clf = SVC(probability=True, random_state=42)
+    
     # Define parameter grid with different kernels and their respective parameters
     param_grid = [
     {

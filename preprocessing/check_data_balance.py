@@ -9,8 +9,6 @@ def check_balance(y_train):
 
     y_train_balanced = y_train.copy()
 
-    # Check if the amount of 1's and 0's are (approximately) equal
-    # (check for data imbalance)
     counts = np.bincount(y_train_balanced)
     count_non_gist = counts[0]
     count_gist = counts[1]

@@ -8,7 +8,7 @@ from sklearn.model_selection import StratifiedKFold
 
 def plot_learning_curve(clfs, X, y, cv=5, scoring='accuracy', train_sizes=np.linspace(0.1, 1.0, 10),
                         random_state=42):
-    """Plot a learning curve of a given classifier."""
+    '''This function plots the learning curve of a given classifier.'''
 
     # Set up 3 subplots vertically
     _, axes = plt.subplots(nrows=len(clfs), ncols=1, figsize=(8, 12), sharex=True)

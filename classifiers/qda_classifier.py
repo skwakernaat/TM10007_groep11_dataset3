@@ -1,12 +1,12 @@
-"""This module contains the function qda_with_grid_search, which trains and tests a
+'''This module contains the function qda_with_grid_search, which trains and tests a
     Quadratic Discriminant Analysis (QDA) classifier using grid search
-    for hyperparameter tuning."""
+    for hyperparameter tuning.'''
 
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 from classifiers.grid_search import grid_search
 
 def qda_with_grid_search(X, y):
-    """Train and test QDA classifier with grid search for hyperparameter tuning."""
+    '''Train and test QDA classifier with grid search for hyperparameter tuning.'''
 
     # Make QDA model
     clf = QuadraticDiscriminantAnalysis()
