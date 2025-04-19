@@ -1,6 +1,6 @@
 '''This module contains the main function which is used to run the entire pipeline of the project.
-    It loads the data, cleans it, splits it into training and test sets, balances the data, scales it,
-    performs feature selection, and trains different classifiers.'''
+    It loads the data, cleans it, splits it into training and test sets, balances the data, scales
+    it, performs feature selection, and trains different classifiers.'''
 #%%
 from preprocessing.load_data import load_data
 from preprocessing.clean_data import clean_data
@@ -26,7 +26,7 @@ X_train_unprocessed, X_test_unprocessed, y_train, y_test, feature_names = split_
 
 # Checks for the balance between GIST and non-GIST in the training set
 check_balance(y_train)
-#%%
+
 # Forward greedy feature selection on the train and test data based on the training data
 X_train_features, X_test_features = forward_feature_selection(
                             X_train_unprocessed, y_train, X_test_unprocessed, y_test, feature_names)
@@ -46,6 +46,7 @@ results_qda = qda_with_grid_search(X_train, y_train)
 results_rf = random_forest_classifier_grid_search(X_train, y_train)
 
 results_linear = linear_classifier_with_grid_search(X_train, y_train)
+
 #%% Plot the learning curves for each classifier
 for models in results_linear.values():
     plot_learning_curve(models, X_train, y_train)
