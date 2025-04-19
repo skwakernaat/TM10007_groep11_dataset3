@@ -51,18 +51,15 @@ results_rf = random_forest_classifier_grid_search(X_train, y_train)
 results_linear = linear_classifier_with_grid_search(X_train, y_train)
 #%%
 # Plot the learning curves for each classifier
-for model in results_linear.values():
-    for clf, score in model:
-        plot_learning_curve(clf, X_train, y_train)
+# Plot the learning curves for each classifier
+for models in results_linear.values():
+    plot_learning_curve(models, X_train, y_train)
 
-for clf in results_qda:
-    plot_learning_curve(clf[0], X_train, y_train)
+plot_learning_curve(results_qda, X_train, y_train)
 
-for clf in results_svm:
-    plot_learning_curve(clf[0], X_train, y_train)
+plot_learning_curve(results_svm, X_train, y_train)
 
-for clf in results_rf:
-    plot_learning_curve(clf[0], X_train, y_train)
+plot_learning_curve(results_rf, X_train, y_train)
 
 #%%
 # # Compute the final results on the test set
