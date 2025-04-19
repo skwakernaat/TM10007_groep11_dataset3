@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import learning_curve
 from sklearn.model_selection import StratifiedKFold
+from IPython.display import display
 
 def plot_learning_curve(clfs, X, y, cv=5, scoring='accuracy', train_sizes=np.linspace(0.1, 1.0, 10),
                         random_state=42):
@@ -65,3 +66,4 @@ def plot_learning_curve(clfs, X, y, cv=5, scoring='accuracy', train_sizes=np.lin
     plt.suptitle(f"Learning Curves for {clf_name} Variants", fontsize=16)
     plt.tight_layout(rect=[0, 0, 1, 0.95])  # leave space for the suptitle
     plt.show()
+    display(plt.gcf())  #ensures rendering in Google Colab
