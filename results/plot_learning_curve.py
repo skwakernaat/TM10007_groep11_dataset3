@@ -7,51 +7,42 @@ from sklearn.model_selection import learning_curve, StratifiedKFold
 
 def plot_learning_curve(clfs, X, y, cv=5, scoring='accuracy',
                         train_sizes=np.linspace(0.1, 1.0, 10), random_state=42):
-    '''Plot learning curves from the selected classifiers.'''
+    '''Generate and save learning curve plots for the given classifiers.'''
 
-    # Normalize input
     if isinstance(clfs, dict):
         clfs = list(clfs.values())
 
-    flat_clfs = []
-    for item in clfs:
-        if isinstance(item, tuple):
-            flat_clfs.append(item)
-        elif isinstance(item, list) and all(isinstance(x, tuple) for x in item):
-            flat_clfs.extend(item)
-        else:
-            raise ValueError("Expected a list of (model, score) tuples or dict of such lists.")
+    flat_clfs = [x for item in clfs for x in (item if isinstance(item, list) else [item])]
 
     cv = StratifiedKFold(n_splits=cv, shuffle=True, random_state=random_state)
 
     for clf, _ in flat_clfs:
-        fig, ax = plt.subplots(figsize=(8, 4))  # one figure per classifier
+        fig, ax = plt.subplots(figsize=(8, 4))
         name = clf.__class__.__name__
 
         train_sizes_abs, train_scores, val_scores = learning_curve(
-            estimator=clf, X=X, y=y,
-            train_sizes=train_sizes, cv=cv,
+            clf, X, y, train_sizes=train_sizes, cv=cv,
             scoring=scoring, n_jobs=-1
         )
 
-        train_scores_mean = np.mean(train_scores, axis=1)
-        train_scores_std = np.std(train_scores, axis=1)
-        val_scores_mean = np.mean(val_scores, axis=1)
-        val_scores_std = np.std(val_scores, axis=1)
-
-        ax.plot(train_sizes_abs, train_scores_mean, 'o-', label='Training score')
-        ax.plot(train_sizes_abs, val_scores_mean, 'o-', label='Validation score')
-        ax.fill_between(train_sizes_abs, train_scores_mean - train_scores_std,
-                        train_scores_mean + train_scores_std, alpha=0.1)
-        ax.fill_between(train_sizes_abs, val_scores_mean - val_scores_std,
-                        val_scores_mean + val_scores_std, alpha=0.1)
+        ax.plot(train_sizes_abs, np.mean(train_scores, axis=1), 'o-', label='Training score')
+        ax.plot(train_sizes_abs, np.mean(val_scores, axis=1), 'o-', label='Validation score')
+        ax.fill_between(train_sizes_abs,
+                        np.mean(train_scores, axis=1) - np.std(train_scores, axis=1),
+                        np.mean(train_scores, axis=1) + np.std(train_scores, axis=1),
+                        alpha=0.1)
+        ax.fill_between(train_sizes_abs,
+                        np.mean(val_scores, axis=1) - np.std(val_scores, axis=1),
+                        np.mean(val_scores, axis=1) + np.std(val_scores, axis=1),
+                        alpha=0.1)
 
         ax.set_title(name)
         ax.set_xlabel("Training Set Size")
         ax.set_ylabel(scoring.capitalize())
-        ax.legend(loc='best')
+        ax.legend()
         ax.grid(True)
 
         fig.tight_layout()
-        plt.show()
-        plt.close(fig)  # Close to avoid "Figure(...)" log in Colab
+        filename = f"learning_curve_{name.lower().replace(' ', '_')}.png"
+        fig.savefig(filename, dpi=300)
+        plt.close(fig)
