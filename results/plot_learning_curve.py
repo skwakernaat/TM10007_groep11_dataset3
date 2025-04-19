@@ -61,3 +61,4 @@ def plot_learning_curve(clfs, X, y, cv=5, scoring='accuracy',
     plt.tight_layout()
     plt.show()
     plt.close(fig)
+    _ = None  # Suppresses Colab's automatic figure logging
