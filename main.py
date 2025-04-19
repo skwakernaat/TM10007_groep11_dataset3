@@ -26,7 +26,7 @@ X_train_unprocessed, X_test_unprocessed, y_train, y_test, feature_names = split_
 
 # Checks for the balance between GIST and non-GIST in the training set
 check_balance(y_train)
-
+#%%
 # Forward greedy feature selection on the train and test data based on the training data
 X_train_features, X_test_features = forward_feature_selection(
                             X_train_unprocessed, y_train, X_test_unprocessed, y_test, feature_names)
@@ -55,6 +55,7 @@ plot_learning_curve(results_qda, X_train, y_train)
 plot_learning_curve(results_svm, X_train, y_train)
 
 plot_learning_curve(results_rf, X_train, y_train)
+_ = None
 
 #%% Compute the final results on the test set
 best_models = [ #enter the best models here, based on the learning curves

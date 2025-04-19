@@ -60,5 +60,6 @@ def plot_learning_curve(clfs, X, y, cv=5, scoring='accuracy',
     axes[-1].set_xlabel("Training Set Size")
     plt.tight_layout()
     plt.show()
-    plt.close(fig)
-    _ = None  # Suppresses Colab's automatic figure logging
+    plt.close()        # <- Let matplotlib handle all open figures
+    del fig            # <- Explicitly delete the fig reference
+    return None        # <- Ensure function returns nothing meaningful
