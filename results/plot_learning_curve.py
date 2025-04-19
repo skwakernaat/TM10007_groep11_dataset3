@@ -9,11 +9,10 @@ def plot_learning_curve(clfs, X, y, cv=5, scoring='accuracy',
                         train_sizes=np.linspace(0.1, 1.0, 10), random_state=42):
     '''Plot learning curves from the selected classifiers.'''
 
-    # Support for both dict.values() and simple lists
+    # Normalize input
     if isinstance(clfs, dict):
         clfs = list(clfs.values())
 
-    # Flatten lists of tuples if needed
     flat_clfs = []
     for item in clfs:
         if isinstance(item, tuple):
@@ -23,15 +22,10 @@ def plot_learning_curve(clfs, X, y, cv=5, scoring='accuracy',
         else:
             raise ValueError("Expected a list of (model, score) tuples or dict of such lists.")
 
-    # Setup plots
-    fig, axes = plt.subplots(nrows=len(flat_clfs), ncols=1, figsize=(8, 4 * len(flat_clfs)), sharex=True)
-    if len(flat_clfs) == 1:
-        axes = [axes]
-
     cv = StratifiedKFold(n_splits=cv, shuffle=True, random_state=random_state)
 
-    for idx, (clf, _) in enumerate(flat_clfs):
-        ax = axes[idx]
+    for clf, _ in flat_clfs:
+        fig, ax = plt.subplots(figsize=(8, 4))  # one figure per classifier
         name = clf.__class__.__name__
 
         train_sizes_abs, train_scores, val_scores = learning_curve(
@@ -53,13 +47,11 @@ def plot_learning_curve(clfs, X, y, cv=5, scoring='accuracy',
                         val_scores_mean + val_scores_std, alpha=0.1)
 
         ax.set_title(name)
+        ax.set_xlabel("Training Set Size")
         ax.set_ylabel(scoring.capitalize())
         ax.legend(loc='best')
         ax.grid(True)
 
-    axes[-1].set_xlabel("Training Set Size")
-    plt.tight_layout()
-    plt.show()
-    plt.close()        # <- Let matplotlib handle all open figures
-    del fig            # <- Explicitly delete the fig reference
-    return None        # <- Ensure function returns nothing meaningful
+        fig.tight_layout()
+        plt.show()
+        plt.close(fig)  # Close to avoid "Figure(...)" log in Colab

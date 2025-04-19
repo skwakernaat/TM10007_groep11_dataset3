@@ -55,7 +55,6 @@ plot_learning_curve(results_qda, X_train, y_train)
 plot_learning_curve(results_svm, X_train, y_train)
 
 plot_learning_curve(results_rf, X_train, y_train)
-_ = None
 
 #%% Compute the final results on the test set
 best_models = [ #enter the best models here, based on the learning curves
