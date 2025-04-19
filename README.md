@@ -11,16 +11,16 @@ Click the badge below to launch the full pipeline in Google Colab:
 
 ## Project Structure
 
-- `main.py`  
+- `main.py`
   Entry point that runs the full pipeline: preprocessing, feature selection, model training, evaluation.
 
-- `GIST_radiomicFeatures.csv`  
+- `GIST_radiomicFeatures.csv`
   Dataset containing radiomic features for GIST and non-GIST cases.
 
-- `requirements.txt`  
+- `requirements.txt`
   List of Python dependencies needed to run the project.
 
-- `preprocessing/`  
+- `preprocessing/`
   Modules for preparing the data:
   - `load_data.py` – Loads the dataset from CSV.
   - `clean_data.py` – Cleans and encodes the labels.
@@ -29,7 +29,7 @@ Click the badge below to launch the full pipeline in Google Colab:
   - `check_data_balance.py` – Checks for class imbalance.
   - `forward_feature_selection.py` – Applies sequential feature selection.
 
-- `classifiers/`  
+- `classifiers/`
   Contains implementations and grid search tuning for different classifiers:
   - `qda_classifier.py`
   - `random_forest.py`
@@ -37,11 +37,11 @@ Click the badge below to launch the full pipeline in Google Colab:
   - `linear_classifiers.py`
   - `grid_search.py` – Shared utility for grid search cross-validation.
 
-- `results/`  
+- `results/`
   Functions to visualize and evaluate model performance:
   - `plot_learning_curve.py`
   - `evaluate_model.py`
 
-- `notebooks/`  
+- `notebooks/`
   Jupyter/Colab-compatible notebooks for running the pipeline in a cloud environment.
   - `TM10007_groep11_dataset3.ipynb`
